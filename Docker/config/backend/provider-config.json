@@ -1,0 +1,136 @@
+{
+  "$schema": "./provider-config.schema.json",
+  "version": "1.0.0",
+  "providers": {
+    "OpenAI": {
+      "enabled": true,
+      "type": "OpenApi",
+      "label": "OpenAI",
+      "description": "OpenAI GPT models",
+      "discoveryEndpoint": "https://api.openai.com/v1/models",
+      "chatEndpoint": "https://api.openai.com/v1/chat/completions",
+      "requiresApiKey": true,
+      "authHeader": "Authorization",
+      "authPrefix": "Bearer ",
+      "apiKey": "",
+      "defaultSettings": {
+        "temperature": 0.7,
+        "maxTokens": 2048,
+        "condenseChars": 750,
+        "maxChunks": 5
+      }
+    },
+    "Anthropic": {
+      "enabled": true,
+      "type": "OpenApi",
+      "label": "Anthropic",
+      "description": "Anthropic Claude models",
+      "discoveryEndpoint": "https://api.anthropic.com/v1/models",
+      "chatEndpoint": "https://api.anthropic.com/v1/messages",
+      "requiresApiKey": true,
+      "authHeader": "x-api-key",
+      "authPrefix": "",
+      "apiKey": "",
+      "defaultSettings": {
+        "temperature": 1.0,
+        "maxTokens": 4096,
+        "condenseChars": 750,
+        "maxChunks": 5
+      }
+    },
+    "Google": {
+      "enabled": true,
+      "type": "Google",
+      "label": "Google AI",
+      "description": "Google Gemini models",
+      "discoveryEndpoint": "https://generativelanguage.googleapis.com/v1beta/models",
+      "chatEndpoint": "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent",
+      "requiresApiKey": true,
+      "authHeader": "x-goog-api-key",
+      "authPrefix": "",
+      "apiKey": "",
+      "defaultSettings": {
+        "temperature": 0.9,
+        "maxTokens": 2048,
+        "condenseChars": 750,
+        "maxChunks": 5
+      }
+    },
+    "Groq": {
+      "enabled": true,
+      "type": "OpenApi",
+      "label": "Groq",
+      "description": "Groq fast inference",
+      "discoveryEndpoint": "https://api.groq.com/openai/v1/models",
+      "chatEndpoint": "https://api.groq.com/openai/v1/chat/completions",
+      "requiresApiKey": true,
+      "authHeader": "Authorization",
+      "authPrefix": "Bearer ",
+      "apiKey": "",
+      "defaultSettings": {
+        "temperature": 0.5,
+        "maxTokens": 8192,
+        "condenseChars": 750,
+        "maxChunks": 5
+      }
+    },
+    "Ollama": {
+      "enabled": true,
+      "type": "OpenApi",
+      "label": "Ollama (Local)",
+      "description": "Local Ollama instance",
+      "discoveryEndpoint": "http://localhost:11434/api/tags",
+      "chatEndpoint": "http://localhost:11434/api/chat",
+      "requiresApiKey": false,
+      "authHeader": null,
+      "authPrefix": "",
+      "apiKey": null,
+      "defaultSettings": {
+        "temperature": 0.8,
+        "maxTokens": 2048,
+        "condenseChars": 750,
+        "maxChunks": 5
+      }
+    },
+    "Azure": {
+      "enabled": false,
+      "type": "OpenApi",
+      "label": "Azure OpenAI",
+      "description": "Azure OpenAI Service",
+      "discoveryEndpoint": "https://{resource}.openai.azure.com/openai/deployments?api-version=2023-05-15",
+      "chatEndpoint": "https://{resource}.openai.azure.com/openai/deployments/{deployment}/chat/completions?api-version=2023-05-15",
+      "requiresApiKey": true,
+      "authHeader": "api-key",
+      "authPrefix": "",
+      "apiKey": "",
+      "customFields": {
+        "resource": "",
+        "deployment": ""
+      },
+      "defaultSettings": {
+        "temperature": 0.7,
+        "maxTokens": 4096,
+        "condenseChars": 750,
+        "maxChunks": 5
+      }
+    },
+    "Local": {
+      "enabled": true,
+      "type": "OpenApi",
+      "label": "Local/Custom",
+      "description": "Custom local endpoint",
+      "discoveryEndpoint": "http://localhost:1234/v1/models",
+      "chatEndpoint": "http://localhost:1234/v1/chat/completions",
+      "requiresApiKey": false,
+      "authHeader": null,
+      "authPrefix": "",
+      "apiKey": null,
+      "defaultSettings": {
+        "temperature": 0.7,
+        "maxTokens": 2048,
+        "condenseChars": 750,
+        "maxChunks": 5
+      }
+    }
+  }
+}

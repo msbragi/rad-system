@@ -1,0 +1,109 @@
+<div class="cookie-preferences-dialog" *transloco="let t">
+  <h2 mat-dialog-title>
+    <mat-icon>tune</mat-icon>
+    {{ t("cookies.preferences.title") }}
+  </h2>
+
+  <mat-dialog-content>
+    <p class="dialog-description">{{ t("cookies.preferences.description") }}</p>
+
+    <div class="cookie-category">
+      <div class="category-header">
+        <div class="category-info">
+          <h3>{{ t("cookies.categories.necessary.title") }}</h3>
+          <p>{{ t("cookies.categories.necessary.description") }}</p>
+        </div>
+        <mat-slide-toggle
+          [checked]="preferences.necessary"
+          disabled="true"
+          color="primary"
+        >
+        </mat-slide-toggle>
+      </div>
+      <div class="category-details">
+        <small>{{ t("cookies.categories.necessary.details") }}</small>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="cookie-category">
+      <div class="category-header">
+        <div class="category-info">
+          <h3>{{ t("cookies.categories.analytics.title") }}</h3>
+          <p>{{ t("cookies.categories.analytics.description") }}</p>
+        </div>
+        <mat-slide-toggle [(ngModel)]="preferences.analytics" color="primary">
+        </mat-slide-toggle>
+      </div>
+      <div class="category-details">
+        <small>{{ t("cookies.categories.analytics.details") }}</small>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="cookie-category">
+      <div class="category-header">
+        <div class="category-info">
+          <h3>{{ t("cookies.categories.marketing.title") }}</h3>
+          <p>{{ t("cookies.categories.marketing.description") }}</p>
+        </div>
+        <mat-slide-toggle [(ngModel)]="preferences.marketing" color="primary">
+        </mat-slide-toggle>
+      </div>
+      <div class="category-details">
+        <small>{{ t("cookies.categories.marketing.details") }}</small>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="cookie-category">
+      <div class="category-header">
+        <div class="category-info">
+          <h3>{{ t("cookies.categories.functional.title") }}</h3>
+          <p>{{ t("cookies.categories.functional.description") }}</p>
+        </div>
+        <mat-slide-toggle [(ngModel)]="preferences.functional" color="primary">
+        </mat-slide-toggle>
+      </div>
+      <div class="category-details">
+        <small>{{ t("cookies.categories.functional.details") }}</small>
+      </div>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <div class="dialog-actions">
+      <div class="quick-actions">
+        <button
+          mat-button
+          (click)="onAcceptNecessaryOnly()"
+          class="necessary-only-btn"
+        >
+          {{ t("cookies.preferences.necessary_only") }}
+        </button>
+
+        <button
+          mat-button
+          color="primary"
+          (click)="onAcceptAll()"
+          class="accept-all-btn"
+        >
+          {{ t("cookies.preferences.accept_all") }}
+        </button>
+      </div>
+
+      <div class="main-actions">
+        <button mat-button (click)="onCancel()">
+          {{ t("common.cancel") }}
+        </button>
+
+        <button mat-raised-button color="primary" (click)="onSave()">
+          {{ t("cookies.preferences.save") }}
+        </button>
+      </div>
+    </div>
+  </mat-dialog-actions>
+</div>

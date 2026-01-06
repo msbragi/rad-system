@@ -1,0 +1,5 @@
+/* Modern footer styling compatible with Material Design light/dark themes */
+:host ::ng-deep {
+  display: block;
+  width: 100%;
+}

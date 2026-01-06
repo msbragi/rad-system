@@ -1,0 +1,85 @@
+<!-- Versione ottimizzata con componenti Material -->
+<mat-card
+  class="drop-upload-container"
+  [class.dragging]="isDragging"
+  [class.has-error]="error"
+  (dragover)="onDragOver($event)"
+  (dragleave)="onDragLeave($event)"
+  (drop)="onFileDropped($event)"
+  (click)="triggerFileInput()"
+>
+  <input
+    #fileInput
+    type="file"
+    [accept]="config.acceptedFileTypes"
+    [multiple]="config.allowMultiple"
+    (change)="onFileSelected($event)"
+    style="display: none"
+  />
+
+  <mat-card-content>
+    <!-- Empty state -->
+    <div
+      *ngIf="!currentFile && !(loadingService.loading$ | async)"
+      class="empty-state"
+    >
+      <mat-icon class="upload-icon">cloud_upload</mat-icon>
+      <div class="upload-text" [innerHTML]="placeholder"></div>
+      <div
+        class="upload-hint"
+        *ngIf="config.maxFileSize || config.acceptedFileTypes"
+      >
+        Max: {{ config.maxFileSize }} MB
+        <ng-container
+          *ngIf="config.acceptedFileTypes && config.acceptedFileTypes !== '*/*'"
+        >
+          | Tipi: {{ config.acceptedFileTypes }}
+        </ng-container>
+      </div>
+    </div>
+
+    <!-- File selected state -->
+    <div
+      *ngIf="currentFile && !(loadingService.loading$ | async)"
+      class="file-state"
+    >
+      <div class="file-preview" *ngIf="filePreview">
+        <img [src]="filePreview" alt="Anteprima" />
+      </div>
+
+      <div class="file-icon" *ngIf="!filePreview">
+        <mat-icon>{{ getFileIcon(currentFile) }}</mat-icon>
+      </div>
+
+      <div class="file-info">
+        <div class="file-name">{{ currentFile.name }}</div>
+        <div class="file-size">{{ formatFileSize(currentFile.size) }}</div>
+      </div>
+    </div>
+
+    <!-- Error message -->
+    <div *ngIf="error" class="error-message">
+      <mat-icon>error</mat-icon>
+      <span>{{ error }}</span>
+    </div>
+  </mat-card-content>
+
+  <!-- Actions -->
+  <mat-card-actions
+    *ngIf="currentFile && !(loadingService.loading$ | async)"
+    align="end"
+  >
+    <button
+      mat-button
+      color="primary"
+      (click)="uploadFile(); $event.stopPropagation()"
+    >
+      <mat-icon>cloud_upload</mat-icon>
+      Carica
+    </button>
+    <button mat-button (click)="removeFile(); $event.stopPropagation()">
+      <mat-icon>close</mat-icon>
+      Annulla
+    </button>
+  </mat-card-actions>
+</mat-card>

@@ -1,0 +1,48 @@
+{
+    "name": "rad-be",
+    "version": "1.0.0",
+    "description": "RAD System Backend",
+    "main": "dist/main.js",
+    "scripts": {
+        "start": "nest start",
+        "start:dev": "nest start --watch",
+        "build": "nest build"
+    },
+    "dependencies": {
+        "@nestjs/axios": "^4.0.1",
+        "@nestjs/common": "^11.1.8",
+        "@nestjs/config": "^4.0.2",
+        "@nestjs/core": "^11.1.8",
+        "@nestjs/jwt": "^11.0.1",
+        "@nestjs/passport": "^11.0.5",
+        "@nestjs/platform-express": "^11.1.8",
+        "@nestjs/swagger": "^11.2.1",
+        "@nestjs/throttler": "^6.4.0",
+        "@nestjs/typeorm": "^11.0.0",
+        "axios": "^1.13.1",
+        "bcrypt": "^6.0.0",
+        "class-transformer": "^0.5.1",
+        "class-validator": "^0.14.0",
+        "handlebars": "^4.7.8",
+        "helmet": "^8.1.0",
+        "jsonwebtoken": "^9.0.0",
+        "nodemailer": "^7.0.12",
+        "passport": "^0.7.0",
+        "passport-jwt": "^4.0.1",
+        "passport-ldapauth": "^3.0.1",
+        "pg": "^8.16.3",
+        "reflect-metadata": "^0.1.13",
+        "typeorm": "^0.3.17"
+    },
+    "devDependencies": {
+        "@nestjs/cli": "^11.0.10",
+        "@types/bcrypt": "^6.0.0",
+        "@types/eslint": "^9.6.1",
+        "@types/estree": "^1.0.8",
+        "@types/json-schema": "^7.0.15",
+        "@types/node": "^24.9.1",
+        "ts-node": "^10.9.1",
+        "typescript": "^5.0.0"
+    },
+    "license": "MIT"
+}

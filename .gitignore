@@ -1,0 +1,64 @@
+# Environment variables (contains API keys and passwords)
+.env
+
+# Exclude dirs valid only for dev testing
+Utilities/
+
+# Data dirs (too large for git, contains user data)
+uploads/
+update/
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+
+# Other files
+checklist.md
+zipAll.bat
+*.exe
+*.7z
+*.zip
+*.tar
+*.tgz
+*.tar.gz
+
+# Node.js
+**/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build outputs
+**/dist/
+**/build/
+
+# Angular specific
+**/.angular/
+**/coverage/
+**/.sass-cache/
+
+# Environment files
+**/.env
+**/.env.*
+!**/.env.example
+
+# IDE files
+.vscode/
+.idea/
+**/*.swp
+**/*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+**/logs/
+**/*.log
+npm-debug.log*

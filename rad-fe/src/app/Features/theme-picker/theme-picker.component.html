@@ -1,0 +1,11 @@
+<button class="icon-button" mat-icon-button [mat-menu-trigger-for]="themeMenu">
+  <mat-icon>{{ themeService.selectedTheme()?.icon }}</mat-icon>
+</button>
+<mat-menu #themeMenu="matMenu">
+  @for (theme of themeService.getThemes(); track theme.name) {
+    <button mat-menu-item (click)="setTheme(theme.name)">
+      <mat-icon>{{ theme.icon }}</mat-icon>
+      <span>{{ theme.name | titlecase }}</span>
+    </button>
+  }
+</mat-menu>

@@ -1,0 +1,69 @@
+{
+  "appName": "Rapid Development System",
+  "apiUrl": "http://localhost:3000/api/v1",
+  "logMode": "console",
+  "siteMode": "development",
+  "version": "1.0.0",
+  "langs": [
+    {
+      "code": "en",
+      "label": "ENG",
+      "description": "English",
+      "langEn": "English"
+    },
+    {
+      "code": "it",
+      "label": "ITA",
+      "description": "Italiano",
+      "langEn": "Italian"
+    }
+  ],
+  "google": {
+    "clientId": "439716006061-ltj6cp98tlk821oh0qg51bn0lvltlm50.apps.googleusercontent.com",
+    "redirectUri": "http://localhost:4200",
+    "button": {
+      "theme": "outline",
+      "size": "large",
+      "text": "continue_with",
+      "logo_alignment": "left"
+    },
+    "analyticsId": "G-SSQ5E4CVF8"
+  },
+  "uploadConfig": {
+    "maxFileSize": 50,
+    "maxFileCount": 5,
+    "acceptedFileTypes": "*/*",
+    "allowMultiple": false
+  },
+  "menus": {
+    "guest": [
+      {
+        "label": "Home",
+        "icon": "home",
+        "route": "/"
+      },
+      {
+        "label": "Login",
+        "icon": "login",
+        "route": "/login"
+      }
+    ],
+    "user": [
+      {
+        "label": "User profile",
+        "icon": "account_circle",
+        "route": "/user-profile"
+      }
+    ],
+    "admin": [
+      {
+        "label": "_DIVIDER_"
+      },
+      {
+        "label": "Manage Users",
+        "icon": "people",
+        "route": "/users"
+      }
+    ]
+  }
+}

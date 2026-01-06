@@ -1,0 +1,36 @@
+name: rad_tar-helper
+
+services:
+  tar-helper:
+    image: alpine:latest
+    container_name: tar_helper
+    command: sleep infinity
+    volumes:
+      - rad_backend_data:/data/backend
+      - rad_frontend_data:/data/frontend
+      - rad_postgres_data:/data/postgres
+    networks:
+      - rad_network
+
+volumes:
+  rad_backend_data:
+    name: rad_backend_data
+    external: true
+  rad_frontend_data:
+    name:  rad_frontend_data
+    external: true
+  rad_postgres_data:
+    name:  rad_postgres_data
+    external: true
+
+networks:
+  rad_network:
+    driver: bridge
+    name: rad_network
+
+# Esempio di uso:
+# docker-compose up -d
+# docker exec -it tar_helper sh
+# tar -xvf /data/archivio.tar -C /data/
+# tar -cvf /data/backup.tar /data/qualcosa
+

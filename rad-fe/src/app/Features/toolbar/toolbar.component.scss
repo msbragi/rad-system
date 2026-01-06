@@ -1,0 +1,160 @@
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: var(
+    --mat-sys-level2,
+    0px 3px 1px -2px rgba(0, 0, 0, 0.2),
+    0px 2px 2px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 5px 0px rgba(0, 0, 0, 0.12)
+  );
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  max-height: 50px;
+}
+
+.responsive-logo {
+  max-height: 100%;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+@media (max-width: 599px) {
+  .logo-container {
+    max-height: 40px;
+  }
+}
+
+@media (max-width: 400px) {
+  .logo-container {
+    max-height: 25px;
+  }
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+/* User avatar styling */
+.user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.avatar-button {
+  min-width: initial;
+  padding: 12px 8px 2px 8px;
+}
+
+/* User menu header styling using a different approach */
+::ng-deep {
+  .user-menu-header {
+    padding: 16px;
+    text-align: center !important;
+    font-size: 16px;
+    letter-spacing: 0.15px; // Material Design typography spec
+    font-weight: 500;
+    pointer-events: none;
+  }
+
+  // Make the menu items a bit more spacious
+  .mat-menu-item {
+    line-height: 48px;
+    height: 48px;
+  }
+}
+
+/* Subscription badge styling */
+.subscription-badge {
+  min-width: initial;
+  margin-right: 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  height: 32px;
+  padding: 0 12px;
+  transition: all 0.2s ease-in-out;
+
+  .subscription-text {
+    margin-left: 6px;
+  }
+
+  mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+}
+
+/* Badge color variants */
+.subscription-badge-guest {
+  background-color: #6c757d;
+  color: white;
+
+  &:hover {
+    background-color: #5a6268;
+  }
+}
+
+.subscription-badge-free {
+  background-color: #6c757d;
+  color: white;
+
+  &:hover {
+    background-color: #5a6268;
+  }
+}
+
+.subscription-badge-premium {
+  background: linear-gradient(45deg, #ffd700, #ff8c00);
+  color: #333;
+
+  &:hover {
+    background: linear-gradient(45deg, #ffed4e, #ff9500);
+  }
+}
+
+.subscription-badge-trial {
+  background: linear-gradient(45deg, #ff9800, #f57c00);
+  color: white;
+
+  &:hover {
+    background: linear-gradient(45deg, #ffb74d, #fb8c00);
+  }
+}
+
+.subscription-badge-expired {
+  background-color: #dc3545;
+  color: white;
+
+  &:hover {
+    background-color: #c82333;
+  }
+}
+
+/* Responsive behavior */
+@media (max-width: 768px) {
+  .subscription-badge {
+    .subscription-text {
+      display: none; // Hide text on mobile, show only icon
+    }
+
+    min-width: 32px;
+    padding: 0 8px;
+    margin-right: 8px;
+  }
+}

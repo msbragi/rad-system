@@ -1,0 +1,10 @@
+{
+  "en": {
+    "passwordReset": "RAD System Password Reset",
+    "passwordChanged": "Your Password Has Been Changed"
+  },
+  "it": {
+    "passwordReset": "RAD System Reset della Password",
+    "passwordChanged": "La tua password è stata cambiata"
+  }
+}

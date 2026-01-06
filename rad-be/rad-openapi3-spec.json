@@ -1,0 +1,832 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/api": {
+      "get": {
+        "operationId": "AppController_getApiDocs",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Returns the API documentation URL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "docsUrl": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get API documentation URL",
+        "tags": [
+          "RAD System Api"
+        ]
+      }
+    },
+    "/api/v1/admin/debug/me": {
+      "get": {
+        "operationId": "AdminController_debugMe",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "User data from JWT token"
+          }
+        },
+        "security": [
+          {
+            "jwt-auth": []
+          }
+        ],
+        "summary": "Debug endpoint to check user data from JWT",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/users": {
+      "get": {
+        "operationId": "AdminController_getUsers",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Page number (starts from 1)",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Number of items per page",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "role",
+            "required": false,
+            "in": "query",
+            "description": "Filter by role",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "description": "Filter by status",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "required": false,
+            "in": "query",
+            "description": "Search by email or name",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Users retrieved successfully"
+          }
+        },
+        "security": [
+          {
+            "jwt-auth": []
+          }
+        ],
+        "summary": "List all users with filtering and pagination",
+        "tags": [
+          "admin"
+        ]
+      },
+      "post": {
+        "operationId": "AdminController_createUser",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminCreateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User created successfully"
+          },
+          "400": {
+            "description": "Email or username already exists"
+          }
+        },
+        "security": [
+          {
+            "jwt-auth": []
+          }
+        ],
+        "summary": "Create a new user - Admin can create regular/admin users, Super user can create any user",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/users/{id}/role": {
+      "patch": {
+        "operationId": "AdminController_updateUserRole",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminUpdateUserRoleDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User role updated successfully"
+          }
+        },
+        "security": [
+          {
+            "jwt-auth": []
+          }
+        ],
+        "summary": "Update user role - Admin can assign admin role to ordinary users, Super user can assign any role",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/users/{id}/status": {
+      "patch": {
+        "operationId": "AdminController_updateUserStatus",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminUpdateUserStatusDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User status updated successfully"
+          }
+        },
+        "security": [
+          {
+            "jwt-auth": []
+          }
+        ],
+        "summary": "Enable or disable user account - Admin can disable ordinary users, Super user can disable anyone",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/users/{id}": {
+      "put": {
+        "operationId": "AdminController_updateUser",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminUpdateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User updated successfully"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        },
+        "security": [
+          {
+            "jwt-auth": []
+          }
+        ],
+        "summary": "Update user details - Admin can update ordinary users, Super user can update anyone",
+        "tags": [
+          "admin"
+        ]
+      },
+      "delete": {
+        "operationId": "AdminController_deleteUser",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User deleted successfully"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        },
+        "security": [
+          {
+            "jwt-auth": []
+          }
+        ],
+        "summary": "Delete a user - Admin can delete ordinary users, Super user can delete anyone (except themselves)",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/auth/login": {
+      "post": {
+        "operationId": "AuthController_login",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login successful"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "jwt-auth": []
+          }
+        ],
+        "summary": "Login user",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/api/v1/auth/forgot-password/{language}": {
+      "post": {
+        "operationId": "AuthController_forgotPassword",
+        "parameters": [
+          {
+            "name": "language",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForgotPasswordDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password reset email sent"
+          }
+        },
+        "security": [
+          {
+            "jwt-auth": []
+          }
+        ],
+        "summary": "Request password reset",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/api/v1/auth/reset-password": {
+      "post": {
+        "operationId": "AuthController_resetPassword",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password reset successfully"
+          },
+          "400": {
+            "description": "Invalid reset token"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "410": {
+            "description": "Reset link expired"
+          }
+        },
+        "security": [
+          {
+            "jwt-auth": []
+          }
+        ],
+        "summary": "Reset password using token",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/api/v1/auth/refresh-token": {
+      "post": {
+        "operationId": "AuthController_refreshToken",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshTokenDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "New access token generated successfully"
+          },
+          "401": {
+            "description": "Invalid refresh token"
+          }
+        },
+        "security": [
+          {
+            "jwt-auth": []
+          }
+        ],
+        "summary": "Refresh access token",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/api/v1/auth/sso-password-links": {
+      "get": {
+        "operationId": "AuthController_ssoPasswordLinks",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "jwt-auth": []
+          }
+        ],
+        "summary": "Returns a list of sso providers with change password url",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/api/v1/users/count": {
+      "get": {
+        "operationId": "UsersController_count",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "jwt-auth": []
+          }
+        ],
+        "summary": "Return number of registered users",
+        "tags": [
+          "users"
+        ]
+      }
+    },
+    "/api/v1/users/me": {
+      "get": {
+        "operationId": "UsersController_findOne",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwt-auth": []
+          }
+        ],
+        "summary": "Get logged in user profile",
+        "tags": [
+          "users"
+        ]
+      },
+      "put": {
+        "operationId": "UsersController_update",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwt-auth": []
+          }
+        ],
+        "summary": "Update logged in user",
+        "tags": [
+          "users"
+        ]
+      },
+      "delete": {
+        "operationId": "UsersController_remove",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "jwt-auth": []
+          }
+        ],
+        "summary": "Delete logged in user",
+        "tags": [
+          "users"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "RAD System",
+    "description": "📚 RAD System API Documentation",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [
+    {
+      "name": "RAD System Api",
+      "description": "Rapid development infrastructure for nestjs and angular"
+    },
+    {
+      "name": "auth",
+      "description": "RAD authentication management"
+    },
+    {
+      "name": "users",
+      "description": "RAD users management"
+    }
+  ],
+  "servers": [],
+  "components": {
+    "securitySchemes": {
+      "jwt-auth": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http",
+        "name": "Authorization",
+        "in": "header"
+      }
+    },
+    "schemas": {
+      "AdminUpdateUserRoleDto": {
+        "type": "object",
+        "properties": {
+          "role": {
+            "type": "string",
+            "enum": [
+              "super_user",
+              "admin",
+              "user",
+              null
+            ],
+            "description": "User role - null removes admin privileges"
+          }
+        },
+        "required": [
+          "role"
+        ]
+      },
+      "AdminUpdateUserStatusDto": {
+        "type": "object",
+        "properties": {
+          "disabled": {
+            "type": "boolean",
+            "description": "Whether the user account is disabled"
+          }
+        },
+        "required": [
+          "disabled"
+        ]
+      },
+      "AdminCreateUserDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User email address"
+          },
+          "username": {
+            "type": "string",
+            "description": "Username"
+          },
+          "password": {
+            "type": "string",
+            "description": "User password"
+          },
+          "fullName": {
+            "type": "string",
+            "description": "Full name"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "super_user",
+              "admin",
+              null
+            ],
+            "description": "User role"
+          },
+          "disabled": {
+            "type": "boolean",
+            "description": "Whether the user is disabled",
+            "default": false
+          },
+          "departments": {
+            "type": "string",
+            "description": "Departments (comma-separated)"
+          },
+          "ssoMask": {
+            "type": "number",
+            "description": "Bitmask SSO provider (null=local, 2=ldap, 4=google, ...)"
+          }
+        },
+        "required": [
+          "email",
+          "username",
+          "password",
+          "fullName"
+        ]
+      },
+      "AdminUpdateUserDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User email address"
+          },
+          "username": {
+            "type": "string",
+            "description": "Username"
+          },
+          "password": {
+            "type": "string",
+            "description": "User password (leave empty to keep current)"
+          },
+          "fullName": {
+            "type": "string",
+            "description": "Full name"
+          },
+          "departments": {
+            "type": "string",
+            "description": "Departments (comma-separated)"
+          },
+          "ssoMask": {
+            "type": "number",
+            "description": "Bitmask SSO provider (null=local, 2=ldap, 4=google, ...)"
+          }
+        }
+      },
+      "LoginDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "john.doe@example.com"
+          },
+          "username": {
+            "type": "string",
+            "example": "johndoe"
+          },
+          "password": {
+            "type": "string",
+            "example": "Password123!"
+          }
+        },
+        "required": [
+          "password"
+        ]
+      },
+      "ForgotPasswordDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User email address",
+            "example": "user@example.com"
+          }
+        },
+        "required": [
+          "email"
+        ]
+      },
+      "ResetPasswordDto": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "Password reset token received by email",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+          },
+          "password": {
+            "type": "string",
+            "description": "New password",
+            "example": "newSecurePassword123"
+          }
+        },
+        "required": [
+          "token",
+          "password"
+        ]
+      },
+      "RefreshTokenDto": {
+        "type": "object",
+        "properties": {
+          "refresh_token": {
+            "type": "string",
+            "description": "The refresh token issued during login"
+          }
+        },
+        "required": [
+          "refresh_token"
+        ]
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "deletedAt": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "createdAt",
+          "updatedAt",
+          "deletedAt"
+        ]
+      },
+      "UpdateUserDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "fullName": {
+            "type": "string"
+          },
+          "ssoMask": {
+            "type": "number",
+            "description": "Bitmask SSO provider (null=local, 2=ldap, 4=google, ...)"
+          },
+          "avatar": {
+            "type": "string"
+          },
+          "verifyToken": {
+            "type": "string"
+          },
+          "isVerified": {
+            "type": "boolean",
+            "example": true
+          },
+          "departments": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "email",
+          "fullName"
+        ]
+      }
+    }
+  }
+}

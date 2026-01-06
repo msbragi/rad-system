@@ -1,0 +1,35 @@
+<div
+  *transloco="let t; read: 'common.confirm'"
+  class="confirm-dialog-container"
+>
+  <mat-toolbar color="primary">
+    <span>{{ data.title || t("Confirm?") }}</span>
+  </mat-toolbar>
+
+  <mat-dialog-content>
+    <!-- Click on [Confirm] to execute or [Cancel] to abort' -->
+    <p>{{ data.message || t("okcancel") }}</p>
+  </mat-dialog-content>
+  <mat-dialog-actions [align]="'end'">
+    <button
+      mat-button
+      type="button"
+      mat-raised-button
+      color="accent"
+      [mat-dialog-close]="false"
+    >
+      <mat-icon>close</mat-icon>
+      {{ t("cancelbutton") }}
+    </button>
+    <button
+      mat-button
+      type="button"
+      mat-raised-button
+      color="warn"
+      [mat-dialog-close]="true"
+    >
+      <mat-icon>check</mat-icon>
+      {{ t("okbutton") }}
+    </button>
+  </mat-dialog-actions>
+</div>

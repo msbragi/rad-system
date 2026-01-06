@@ -1,0 +1,94 @@
+.menu-container {
+  width: 250px;
+  transition: width 0.3s ease;
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 100%; // Ensure menu takes full height
+  padding: 0px 0px 0px 5px;
+
+  .mat-mdc-nav-list .mat-mdc-list-item {
+    border-radius: 0;
+    height: 48px; // Consistent height
+    // Style for active menu items
+    &.active-link {
+      background-color: var(--mat-sys-surface-background, rgba(0, 0, 0, 0.04));
+      border-left: 2px solid var(--mat-sys-primary, #6200ea) !important;
+      border-top-left-radius: 8px; // Rounded right edge for aesthetic
+      border-bottom-left-radius: 8px; // Rounded right edge for aesthetic
+      color: var(--mat-sys-on-surface, rgba(0, 0, 0, 0.87)) !important;
+    }
+  }
+
+  &.collapsed {
+    width: 60px;
+
+    // When collapsed, center the icons
+    .mat-icon {
+      margin-right: 0;
+      margin-left: 4px;
+    }
+
+    // Hide text in expansion panel header when collapsed
+    .mat-expansion-panel-header-title span {
+      display: none;
+    }
+
+    // Hide submenu when collapsed
+    .mat-expansion-panel-content {
+      display: none;
+    }
+
+    // Better tooltip appearance when collapsed
+    ::ng-deep .mat-tooltip {
+      font-size: 14px;
+    }
+  }
+}
+
+// Remove default mat-expansion-panel styling
+.menu-expansion {
+  box-shadow: none !important;
+  background-color: transparent !important;
+
+  .mat-expansion-panel-header {
+    padding: 0 16px;
+    height: 48px;
+
+    .mat-panel-title {
+      display: flex;
+      align-items: center;
+
+      .mat-icon {
+        margin-right: 16px;
+      }
+    }
+  }
+
+  // Style expansion panel to match list items
+  &.mat-expanded {
+    background-color: var(
+      --mat-expansion-container-background-color,
+      transparent
+    );
+  }
+}
+
+// Style submenu items with proper indentation
+.submenu-item {
+  padding-left: 16px;
+}
+
+// Ensure icons are aligned properly
+.mat-icon {
+  margin-right: 16px;
+  vertical-align: middle;
+}
+
+// Loading and empty states
+.menu-loading,
+.menu-empty {
+  padding: 24px 16px;
+  text-align: center;
+  color: var(--mat-list-item-disabled-text-color, rgba(0, 0, 0, 0.6));
+  font-size: 14px;
+}

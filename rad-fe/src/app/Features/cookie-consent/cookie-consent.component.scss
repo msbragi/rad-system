@@ -1,0 +1,203 @@
+.cookie-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4px);
+
+  .cookie-banner-card {
+    max-width: 1200px;
+    margin: 0 auto;
+    border-radius: 8px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    position: relative; // Add this for absolute positioning of close button
+  }
+
+  .banner-close-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    color: var(--mat-sys-on-surface-variant);
+    z-index: 1;
+
+    &:hover {
+      color: var(--mat-sys-on-surface);
+      background-color: var(--mat-sys-surface-variant);
+    }
+
+    mat-icon {
+      font-size: 1.25rem;
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+  }
+
+  .banner-content {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 0.5rem;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: 1rem;
+    }
+  }
+
+  .banner-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex: 1;
+
+    .banner-icon {
+      mat-icon {
+        font-size: 2rem;
+        width: 2rem;
+        height: 2rem;
+        color: var(--mat-sys-primary);
+      }
+    }
+
+    .banner-text {
+      h3 {
+        margin: 0 0 0.5rem 0;
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: var(--mat-sys-on-surface);
+      }
+
+      p {
+        margin: 0;
+        font-size: 0.9rem;
+        color: var(--mat-sys-on-surface-variant);
+        line-height: 1.4;
+      }
+    }
+  }
+
+  .banner-actions {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    flex-shrink: 0;
+
+    @media (max-width: 768px) {
+      width: 100%;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .manage-btn {
+      min-width: auto;
+      font-size: 0.875rem;
+    }
+
+    .necessary-btn {
+      min-width: auto;
+      font-size: 0.875rem;
+    }
+
+    .accept-btn {
+      font-weight: 500;
+    }
+
+    @media (max-width: 480px) {
+      button {
+        flex: 1;
+        min-width: 0;
+        font-size: 0.8rem;
+      }
+    }
+  }
+}
+
+// Dark theme support
+.dark-theme {
+  .cookie-banner {
+    background: rgba(255, 255, 255, 0.05);
+
+    .cookie-banner-card {
+      background: var(--mat-sys-surface-container);
+      border: 1px solid var(--mat-sys-outline-variant);
+    }
+  }
+}
+
+// Animation
+.cookie-banner {
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+// Cookie Floating Action Button
+.cookie-icon-fab {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 1000;
+
+  .cookie-fab-button {
+    width: 56px;
+    height: 56px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    mat-icon {
+      font-size: 1.5rem;
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  }
+
+  // Animation entrance
+  animation: fadeInUp 0.5s ease-out 2s both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .cookie-icon-fab {
+    bottom: 1.5rem;
+    right: 1.5rem;
+
+    .cookie-fab-button {
+      width: 48px;
+      height: 48px;
+
+      mat-icon {
+        font-size: 1.25rem;
+        width: 1.25rem;
+        height: 1.25rem;
+      }
+    }
+  }
+}

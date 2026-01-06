@@ -1,0 +1,95 @@
+<div class="user-form-container" *transloco="let t">
+  <h2 mat-dialog-title>{{ t(getTitle()) }}</h2>
+
+  <mat-dialog-content>
+    @if (form) {
+      <form [formGroup]="form" class="user-form">
+        <!-- Username -->
+        <mat-form-field appearance="outline">
+          <mat-label>{{ t("users.username") }}</mat-label>
+          <input matInput type="text" formControlName="username" required />
+          @if (form.get("username")?.hasError("required")) {
+            <mat-error>{{ t("users.username_required") }}</mat-error>
+          }
+        </mat-form-field>
+
+        <!-- Email -->
+        <mat-form-field appearance="outline">
+          <mat-label>{{ t("users.email") }}</mat-label>
+          <input matInput type="email" formControlName="email" required />
+          @if (form.get("email")?.hasError("required")) {
+            <mat-error>{{ t("users.email_required") }}</mat-error>
+          }
+          @if (form.get("email")?.hasError("email")) {
+            <mat-error>{{ t("users.email_invalid") }}</mat-error>
+          }
+        </mat-form-field>
+
+        <!-- Password -->
+        <mat-form-field appearance="outline">
+          <mat-label>{{ t("users.password") }}</mat-label>
+          <input
+            matInput
+            type="password"
+            formControlName="password"
+            [required]="!isEditMode"
+          />
+          @if (form.get("password")?.hasError("required")) {
+            <mat-error>{{ t("users.password_required") }}</mat-error>
+          }
+          @if (form.get("password")?.hasError("minlength")) {
+            <mat-error>{{ t("users.password_minlength") }}</mat-error>
+          }
+          @if (isEditMode) {
+            <mat-hint>{{ t("users.password_hint") }}</mat-hint>
+          }
+        </mat-form-field>
+
+        <!-- Full Name -->
+        <mat-form-field appearance="outline">
+          <mat-label>{{ t("users.fullName") }}</mat-label>
+          <input matInput type="text" formControlName="fullName" required />
+          @if (form.get("fullName")?.hasError("required")) {
+            <mat-error>{{ t("users.fullName_required") }}</mat-error>
+          }
+        </mat-form-field>
+
+        <!-- Role -->
+        <mat-form-field appearance="outline">
+          <mat-label>{{ t("users.role") }}</mat-label>
+          <mat-select formControlName="role">
+            @for (option of roleOptions; track option.value) {
+              <mat-option [value]="option.value">{{
+                t(option.label)
+              }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <!-- Departments -->
+        <mat-form-field appearance="outline">
+          <mat-label>{{ t("users.departments") }}</mat-label>
+          <input matInput type="text" formControlName="departments" required />
+        </mat-form-field>
+
+        <!-- Disabled -->
+        <mat-checkbox formControlName="disabled">
+          {{ t("users.disabled_label") }}
+        </mat-checkbox>
+        <mat-dialog-actions align="end">
+          <button mat-button (click)="onCancel()">
+            {{ t("common.cancel") }}
+          </button>
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="onSave()"
+            [disabled]="!form.valid"
+          >
+            {{ t("common.save") }}
+          </button>
+        </mat-dialog-actions>
+      </form>
+    }
+  </mat-dialog-content>
+</div>

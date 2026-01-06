@@ -1,0 +1,47 @@
+.lang-picker {
+  button {
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    border: none;
+    background: none;
+  }
+}
+
+::ng-deep .lang-menu {
+  box-shadow: none !important;
+}
+
+::ng-deep .lang-item {
+  font-size: 1rem;
+  white-space: nowrap;
+  min-height: 1rem !important;
+  padding: 2px 5px !important;
+
+  .flag {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+
+    img {
+      width: 20px;
+      height: 14px;
+      object-fit: cover;
+      border-radius: 2px;
+    }
+  }
+
+  .label {
+    display: inline-block;
+    vertical-align: middle;
+    font-weight: bold;
+    line-height: 1rem;
+  }
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    /* Optional hover effect */
+  }
+}

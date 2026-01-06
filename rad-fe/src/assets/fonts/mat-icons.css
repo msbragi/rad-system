@@ -1,0 +1,27 @@
+/* ---- Usage in Angular  html ---------------------------------------
+<!-- Filled (default) -->
+<mat-icon>person</mat-icon>
+<span class="material-icons">person</span>
+
+<!-- Outlined -->
+<mat-icon fontIcon="person" class="material-icons-outlined"></mat-icon>
+<span class="material-icons-outlined">person</span>
+
+<!-- Round -->
+<mat-icon fontIcon="person" class="material-icons-round"></mat-icon>
+<span class="material-icons-round">person</span>
+
+<!-- Sharp -->
+<mat-icon fontIcon="person" class="material-icons-sharp"></mat-icon>
+<span class="material-icons-sharp">person</span>
+
+<!-- Two Tone -->
+<mat-icon fontIcon="person" class="material-icons-two-tone"></mat-icon>
+<span class="material-icons-two-tone">person</span>
+---------------------------------------------------------------------- */
+@import url('./material/filled.css');
+@import url('./material/material-icons.css');
+@import url('./material/outlined.css');
+@import url('./material/round.css');
+@import url('./material/sharp.css');
+@import url('./material/two-tone.css');

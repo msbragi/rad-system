@@ -1,0 +1,96 @@
+# ============================================
+# DEVELOPMENT / LOCAL TESTING STACK
+# Refactored for WSL2 performance and clean configs
+# ============================================
+name: rad_system
+
+services:
+  # ============================================
+  # RELATIONAL DATABASE - Postgres
+  # ============================================
+  postgresdb:
+    image: postgres:16-alpine
+    container_name: rad_postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - rad_postgres_data:/var/lib/postgresql/data # Named Volume (Dati)
+      - ./config/postgres/postgresql.conf:/etc/postgresql/postgresql.conf:ro
+      - ./config/postgres/pg_hba.conf:/etc/postgresql/pg_hba.conf:ro
+      #- ./config/postgres/init/:/docker-entrypoint-initdb.d/:ro # init scripts
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d n8n_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+    networks:
+      - rad_network
+
+  # ============================================
+  # BACKEND - NestJs
+  # ============================================
+  backend:
+    build:
+      context: ./images/backend # Path aggiornato
+      dockerfile: Dockerfile
+    image: rad-backend
+    container_name: rad_backend
+    ports:
+      - "3300:3000"
+    volumes:
+      - rad_backend_data:/opt/backend/app
+      - ./config/backend/.env:/opt/backend/app/.env:ro
+      - ./config/backend/uploads:/opt/backend/uploads:ro
+      # - ./config/backend/email/templates:/opt/backend/templates:ro
+    depends_on:
+      postgresdb:
+        condition: service_healthy
+    networks:
+      - rad_network
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=development
+
+  # ============================================
+  # FRONTEND - nginx
+  # ============================================
+  frontend:
+    build:
+      context: ./images/frontend # Path aggiornato
+      dockerfile: Dockerfile
+    image: rad-frontend
+    container_name: rad_frontend
+    ports:
+      - "8080:80"
+    volumes:
+      - rad_frontend_data:/usr/share/nginx/html/
+      - ./config/frontend/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./config/frontend/assets:/usr/share/nginx/html/assets
+    entrypoint: ["/bin/sh", "-c", "chown -R nginx:nginx /usr/share/nginx/html /var/log/nginx && exec nginx -g 'daemon off;'"]
+    networks:
+      - rad_network
+    restart: unless-stopped
+
+volumes:
+  # Volumi per Dati Persistenti (Named Volumes)
+  rad_postgres_data:
+    name: rad_postgres_data
+    external: true
+  rad_backend_data:
+    name: rad_backend_data
+    external: true
+  rad_frontend_data:
+    name: rad_frontend_data
+    external: true
+
+networks:
+  rad_network:
+    driver: bridge
+    name: rad_network
+

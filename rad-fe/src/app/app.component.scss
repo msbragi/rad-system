@@ -1,0 +1,86 @@
+/**
+ * App container layout following Material Design principles
+ * Implements a flexible, responsive layout without fixed heights
+ */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; // Use viewport-relative units instead of fixed height
+  position: relative;
+  z-index: 1;
+}
+
+// Toolbar styling - sticky positioning with Material elevation
+.app-toolbar {
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000; // Above main content but below sidenav
+  // Material will handle elevation automatically when toolbar becomes sticky
+}
+
+// Main content area that flexes to fill available space
+.content-wrapper {
+  position: relative;
+  flex: 1;
+  display: flex;
+  // Remove "overflow: hidden" to allow natural content flow
+}
+
+// Backdrop for sidenav
+.app-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  // Remove fixed width/height calculations
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0.1;
+  z-index: 998;
+  // Add pointer-events to enable clicking through when not active
+  pointer-events: none;
+
+  &.active {
+    pointer-events: auto;
+  }
+}
+
+// Sidenav using Material Design variables and responsive units
+.app-sidenav {
+  position: absolute;
+  top: 0px;
+  left: 0;
+  width: 16rem; // More responsive than fixed 250px
+  background-color: var(--mat-sys-surface); // Use Material Design surface color
+  // Remove fixed height to allow content to determine size
+  bottom: 0; // Use bottom: 0 instead of height: 100%
+  box-shadow: var(--mat-sys-elevation4, 0 2px 4px rgba(0, 0, 0, 0.12));
+  z-index: 999;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  max-height: 600px;
+  overflow-y: auto;
+
+  &.open {
+    transform: translateX(0);
+  }
+}
+
+// Main content area that scrolls naturally
+.main-content {
+  flex: 1;
+  z-index: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  // Allow content to determine height naturally
+}
+.site-message {
+  padding: 5px;
+  border: 1px solid #dcdcdc;
+  text-align: center;
+}
+// Remove the commented out footer styles
