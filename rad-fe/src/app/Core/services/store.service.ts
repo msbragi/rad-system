@@ -136,15 +136,7 @@ export abstract class StoreService {
   static getAvailableLangs(): I18nLang[] {
     return this.getConfig().langs;
   }
-  /*
-  static getModelProviders(): string[] {
-    return this.getConfig().modelProviders;
-  }
 
-  static getModelTypes(): string[] {
-    return this.getConfig().modelTypes;
-  }
-  */
   static getModelTagRegex(): string {
     return this.getConfig().modelTagRegex;
   }

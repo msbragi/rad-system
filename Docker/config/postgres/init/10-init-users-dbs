@@ -1,5 +1,0 @@
-CREATE USER rag_user WITH PASSWORD 'rag123!';
-CREATE DATABASE rag_db OWNER rag_user;
-
-CREATE USER n8n_user WITH PASSWORD 'n8n123!';
-CREATE DATABASE n8n_db OWNER n8n_user;

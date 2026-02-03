@@ -1,4 +1,0 @@
--- Eseguito su n8n_db
-CREATE SCHEMA IF NOT EXISTS n8n_schema AUTHORIZATION n8n_user;
-ALTER SCHEMA n8n_schema OWNER TO n8n_user;
-ALTER DATABASE n8n_db OWNER TO n8n_user;

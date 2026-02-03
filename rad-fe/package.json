@@ -1,9 +1,9 @@
 {
-  "name": "rag-fe",
+  "name": "rad-fe",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --host 0.0.0.0",
+    "start": "ng serve",
     "build": "ng build",
     "test": "ng test"
   },

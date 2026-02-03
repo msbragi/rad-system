@@ -1,0 +1,132 @@
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET ROLE rad_user;
+
+CREATE SCHEMA rad_schema;
+
+--
+-- TOC entry 7 (class 2615 OID 17631)
+-- Name: rad_schema; Type: SCHEMA; Schema: -; Owner: rad_user
+--
+
+SET search_path TO rad_schema;
+
+SET default_tablespace = '';
+SET default_table_access_method = heap;
+
+--
+-- Name: rad_config; Schema: rad_schema; Owner: rad_user
+--
+CREATE TABLE rad_config (
+    key VARCHAR(50) PRIMARY KEY,
+    description TEXT,
+    is_env_value BOOLEAN NOT NULL DEFAULT FALSE,
+    value JSON NOT NULL,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    deleted_at timestamp without time zone
+);
+
+--
+-- ADD Default configuration
+--
+INSERT INTO rad_schema.rad_config ("key",description,is_env_value,value,created_at,updated_at,deleted_at) VALUES
+	 ('URLS_CONFIG','Configura urls',true,'{"BACKEND_URL":"http://localhost:3000","FRONTEND_URL":"http://localhost:4200","UPLOAD_PUBLIC_URL":"http://localhost:3000/uploads"}','2026-01-25 11:17:33.18413','2026-02-02 14:13:42.607364',NULL),
+	 ('LDAP_CONFIG','LDAP authentication settings',true,'{"LDAP_AUTH":false,"LDAP_DIRECT_BIND":"false","LDAP_TIMEOUT":"3000","LDAP_SERVER":"ldap://host.docker.internal:389","LDAP_BASE_DN":"ou=peoples,dc=example,dc=org","LDAP_FILTER":"(&(objectClass=person)(uid={username}))","LDAP_APP_USER":"cn=admin,dc=example,dc=org","LDAP_APP_PASS":"Password123!","LDAP_FIELD_MAP":"uid:username,mail:email,cn:fullName","LDAP_PASSWORD_CHANGE":"http://localhost:4200"}','2026-01-23 10:57:36.744778','2026-01-25 14:52:18.87003',NULL),
+	 ('EMAIL_CONFIG','Configurazione invio email',true,'{"MAIL_HOST":"smtp.gmail.com","MAIL_PORT":"465","MAIL_SECURE":"true","MAIL_FROM":"[Sender email]","MAIL_BCC":"","MAIL_USER":"[Your google email account]","MAIL_PASSWORD":"[Your password here]","MAIL_LANGUAGES":"it,en","EMAIL_TEMPLATE_PATH":"./data/templates/email"}','2026-01-25 10:53:33.312718','2026-01-29 08:32:03.969394',NULL),
+	 ('MISC_CONFIG','Altre configurazioni',true,'{"JWT_EXPIRES_IN":"120m","JWT_REFRESH_EXPIRATION":"1d","UPLOAD_BASE_PATH":"./data/uploads/"}','2026-01-25 11:36:39.622488','2026-01-29 08:32:13.62198',NULL)
+
+
+
+--
+-- Name: departments_id_seq; Type: SEQUENCE; Schema: rad_schema; Owner: rad_user
+--
+CREATE SEQUENCE rad_schema.departments_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+CREATE TABLE rad_schema.departments (
+    id integer DEFAULT nextval('rad_schema.departments_id_seq'::regclass) NOT NULL,
+    code character varying(10) NOT NULL,
+    description character varying(100) NOT NULL,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    deleted_at timestamp without time zone
+);
+--
+-- ADD Default department
+--
+INSERT INTO rad_schema.departments VALUES (1, '.*', 'All Departments', '2025-11-06 12:40:06', '2025-12-30 09:45:40.481545', NULL);
+
+--
+-- Name: users; Type: TABLE; Schema: rad_schema; Owner: rad_user
+--
+CREATE SEQUENCE rad_schema.users_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+CREATE TABLE rad_schema.users (
+    id integer DEFAULT nextval('rad_schema.users_id_seq'::regclass) NOT NULL,
+    email character varying(255) NOT NULL,
+    username character varying(100) NOT NULL,
+    departments character varying(255),
+    password character varying(255),
+    full_name character varying(255),
+    sso_mask integer,
+    avatar character varying(255),
+    is_verified boolean DEFAULT false,
+    verification_token character varying(255),
+    pwd_reset_token character varying(255),
+    pwd_reset_expires timestamp without time zone,
+    role character varying(15) DEFAULT NULL::character varying,
+    disabled boolean DEFAULT false,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    deleted_at timestamp without time zone
+);
+
+--
+-- ADD Default user
+--
+INSERT INTO rad_schema.users VALUES (1, 'superuser@example.com', 'superuser', '.*', '$2b$10$s31Vg3zB10ufne09azfUnu.b.mYeslGPsNGGA67oAWWfKBXWT3ItW', 'Super User', NULL, NULL, true, NULL, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im0uc2JyYWdpQGdtYWlsLmNvbSIsInR5cGUiOiJwYXNzd29yZF9yZXNldCIsImxhbmd1YWdlIjoiaXQiLCJpYXQiOjE3NjcwODc5NDAsImV4cCI6MTc2NzA5MTU0MH0.v0dFYQG3SMIm0nhSKi8YUJzlvxz_NWZe24hKy72pGZI', '2025-12-30 10:45:40.474', 'super_user', false, '2025-11-06 12:40:06', '2025-12-30 09:45:40.481545', NULL);
+
+--
+-- CONSTRAINTS
+--
+ALTER TABLE ONLY rad_schema.departments
+    ADD CONSTRAINT pk_departments PRIMARY KEY (id);
+
+ALTER TABLE ONLY rad_schema.users 
+    ADD CONSTRAINT pk_users PRIMARY KEY (id);
+
+ALTER TABLE ONLY rad_schema.departments
+    ADD CONSTRAINT uq_departments_code UNIQUE (code);
+
+ALTER TABLE ONLY rad_schema.users
+    ADD CONSTRAINT uq_users_email UNIQUE (email);
+
+ALTER TABLE ONLY rad_schema.users
+    ADD CONSTRAINT uq_users_username UNIQUE (username);
+
+--
+-- INDEX
+--
+CREATE INDEX idx_users_disabled ON rad_schema.users USING btree (disabled);
+CREATE INDEX idx_users_role ON rad_schema.users USING btree (role);
+

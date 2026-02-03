@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "rag-fe": {
+    "rad-fe": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -21,7 +21,7 @@
               "hammerjs",
               "qrcode"
             ],            
-            "outputPath": "dist/rag-fe",
+            "outputPath": "dist/rad-fe",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -67,10 +67,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "rag-fe:build:production"
+              "buildTarget": "rad-fe:build:production"
             },
             "development": {
-              "buildTarget": "rag-fe:build:development"
+              "buildTarget": "rad-fe:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -78,7 +78,7 @@
         "extract-i18n": {
           "builder": "@angular/build:extract-i18n",
           "options": {
-            "buildTarget": "rag-fe:build"
+            "buildTarget": "rad-fe:build"
           }
         },
         "test": {

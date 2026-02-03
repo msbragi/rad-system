@@ -1,64 +1,53 @@
-# Environment variables (contains API keys and passwords)
-.env
+# =================================================================
+# DOCKER & DEVOPS
+# =================================================================
 
-# Exclude dirs valid only for dev testing
-Utilities/
+# Ignora tutti i dati persistenti nei volumi locali.
+# La struttura delle cartelle è preservata tramite i file .keep
+Docker/Volumes/*
+!Docker/Volumes/*/.keep
 
-# Data dirs (too large for git, contains user data)
-uploads/
-update/
+# Ignora i file di ambiente con le credenziali (non vanno su Git)
+Docker/Config/backend/.env
 
-# Logs
-*.log
+# Ignora gli upload degli utenti, ma mantieni la cartella
+Docker/Config/backend/uploads/*
+!Docker/Config/backend/uploads/.gitkeep
+
+# Ignora il contenuto "pesante" degli assets del frontend,
+# ma mantieni la cartella 'config' e il suo contenuto.
+Docker/Config/frontend/assets/i18n/*
+Docker/Config/frontend/assets/img/*
+Docker/Config/frontend/assets/fonts/*
+
+# Ignora cartelle temporanee e di build di DevOps
+DevOps/tmp/
+DevOps/update/
+DevOps/old_volumes_backup/
+
+# Ignora i log
 logs/
+*.log
 
-# Temporary files
-*.tmp
-*.temp
-.DS_Store
-Thumbs.db
-
-# Other files
-checklist.md
-zipAll.bat
-*.exe
-*.7z
-*.zip
-*.tar
-*.tgz
-*.tar.gz
-
-# Node.js
-**/node_modules/
+# =================================================================
+# NODE / ANGULAR / NESTJS
+# =================================================================
+.angular/
+node_modules/
+dist/
+.npm/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Build outputs
-**/dist/
-**/build/
-
-# Angular specific
-**/.angular/
-**/coverage/
-**/.sass-cache/
-
-# Environment files
-**/.env
-**/.env.*
-!**/.env.example
-
-# IDE files
+# =================================================================
+# EDITOR & OS
+# =================================================================
 .vscode/
 .idea/
-**/*.swp
-**/*.swo
-
-# OS files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
 .DS_Store
 Thumbs.db
-
-# Logs
-**/logs/
-**/*.log
-npm-debug.log*
