@@ -13,17 +13,17 @@ This guide explains how to completely remove sensitive `.env` files from the git
 The following credentials were found in the committed .env files and **MUST BE ROTATED**:
 
 ### rad-be/.env
-- `JWT_SECRET`: `R4DSyst3mS3cr3tKey12345`
-- `MAIL_PASSWORD`: `odij girb obvf wqed`
-- `MAIL_USER`: `m.sbragi@gmail.com`
-- `MAIL_BCC`: `m.sbragi@nospace.net`
-- `GOOGLE_CLIENT_ID`: `439716006061-ltj6cp98tlk821oh0qg51bn0lvltlm50.apps.googleusercontent.com`
-- `PGSQL_PASSWORD`: `rag123!`
+- `JWT_SECRET`: [REDACTED - see original file]
+- `MAIL_PASSWORD`: [REDACTED - compromised app password]
+- `MAIL_USER`: [REDACTED - email address]
+- `MAIL_BCC`: [REDACTED - email address]
+- `GOOGLE_CLIENT_ID`: [REDACTED - OAuth client ID]
+- `PGSQL_PASSWORD`: [REDACTED]
 
 ### Docker/.env
-- `POSTGRES_USER`: `admin`
-- `POSTGRES_PASSWORD`: `postgres`
-- `POSTGRES_DB`: `Postgres123!`
+- `POSTGRES_USER`: [REDACTED]
+- `POSTGRES_PASSWORD`: [REDACTED]
+- `POSTGRES_DB`: [REDACTED]
 
 ## Complete History Cleanup Steps
 
@@ -96,9 +96,9 @@ node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 ```
 
 #### Email Password
-1. Log into Gmail account: `m.sbragi@gmail.com`
+1. Log into your Gmail account
 2. Go to Security > 2-Step Verification > App passwords
-3. Revoke the old app password: `odij girb obvf wqed`
+3. Revoke the old compromised app password
 4. Generate a new app password
 5. Update `MAIL_PASSWORD` in `rad-be/.env`
 
