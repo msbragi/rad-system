@@ -9,6 +9,11 @@ Docker/Volumes/*
 
 # Ignora i file di ambiente con le credenziali (non vanno su Git)
 Docker/Config/backend/.env
+Docker/.env
+rad-be/.env
+rad-fe/.env
+*.env
+!*.env.example
 
 # Ignora gli upload degli utenti, ma mantieni la cartella
 Docker/Config/backend/uploads/*
