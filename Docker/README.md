@@ -20,7 +20,7 @@ docker compose up -d # start the stack and create all necessary db
 ```
 N.B. You need to update the files in config/postgres/init to:
 - reflect the admin password you used in your .env 
-- change the passwords (if you want) for rag_user and and rag_n8n
+- change the passwords (if you want) for rad_user
 
 
 ### 4. Access Services
