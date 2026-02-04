@@ -1,0 +1,90 @@
+# ============================================
+# DEBIAN / SERVER STACK (VERSIONE CORRETTA E COMPLETA)
+# Ref: Correzioni su porte, nomi container e configurazioni mancanti.
+# ============================================
+name: rad_system
+
+services:
+  # ============================================
+  # RELATIONAL DATABASE - Postgres
+  # ============================================
+  postgresdb:
+    image: postgres:16-alpine
+    container_name: rad_postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./Volumes/postgres:/var/lib/postgresql/data # Bind Mount
+      - ./Config/postgres/postgresql.conf:/etc/postgresql/postgresql.conf:ro
+      - ./Config/postgres/pg_hba.conf:/etc/postgresql/pg_hba.conf:ro
+      - ./Config/postgres/init/:/docker-entrypoint-initdb.d/:ro # init scripts
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    networks:
+      - rad_network
+    restart: unless-stopped
+
+  # ============================================
+  # BACKEND - NestJs
+  # ============================================
+  backend:
+    build:
+      context: ./Images/backend
+      dockerfile: Dockerfile
+    image: rag-backend
+    container_name: rag_backend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./Volumes/backend/app:/opt/backend/app
+      - ./Volumes/backend/data:/opt/backend/app/data
+      - ./Config/backend/.env:/opt/backend/app/.env
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - postgresdb
+    networks:
+      - rad_network
+    restart: unless-stopped
+
+  # ============================================
+  # FRONTEND - nginx
+  # ============================================
+  frontend:
+    build:
+      context: ./Images/frontend
+      dockerfile: Dockerfile
+    image: rad-frontend
+    container_name: rad_frontend
+    ports:
+      - "4200:80"
+    volumes:
+      - ./Volumes/frontend:/usr/share/nginx/html/
+      - ./Config/frontend/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./Config/frontend/assets/config/app-config.json:/usr/share/nginx/html/assets/config/app-config.json:ro
+    entrypoint: ["nginx", "-g", "daemon off;"]
+    networks:
+      - rad_network
+    restart: unless-stopped
+
+  # ============================================
+  # CACHING - Redis
+  # ============================================
+  redis:
+    image: redis:7-alpine
+    container_name: rad_redis
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes --requirepass redis123
+    volumes:
+      - ./Volumes/redis:/data # Bind Mount
+    networks:
+      - rad_network
+    restart: unless-stopped
+
+networks:
+  rad_network:
+    driver: bridge
+    name: rad_network

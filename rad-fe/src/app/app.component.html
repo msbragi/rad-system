@@ -1,0 +1,47 @@
+<div class="app-container">
+  @if (showToolbar) {
+    <tc-toolbar
+      class="app-toolbar"
+      (toggleSidenav)="sidenavOpen = !sidenavOpen"
+    ></tc-toolbar>
+  }
+  <div class="content-wrapper">
+    <!-- Backdrop -->
+    @if (sidenavOpen) {
+      <div
+        class="app-backdrop"
+        [class.active]="sidenavOpen"
+        (click)="sidenavOpen = false"
+      ></div>
+
+      <div class="app-sidenav" [class.open]="sidenavOpen">
+        <!-- Add the tc-menu component to display dynamic menu -->
+        <tc-menu [collapsed]="false"></tc-menu>
+      </div>
+    }
+
+    <main class="main-content">
+      @if (siteMode === "development" && isHomePage()) {
+        <div class="site-message">
+          <h4>
+            This site is still under Development. You can try it, but remember
+            that every week all data will be reset to initial state
+          </h4>
+          <small
+            >Stay tuned. If you wish be informed when the site is ready
+            <a href="mailto:info@pakingfuture.com">send us an email</a></small
+          >
+        </div>
+      }
+      <router-outlet (activate)="routeChanged($event)"></router-outlet>
+    </main>
+  </div>
+
+  <!-- Loading indicator -->
+  <tc-loading></tc-loading>
+
+  <!-- Cookie Consent Banner -->
+  <!--
+  <tc-cookie-consent></tc-cookie-consent>
+  -->
+</div>

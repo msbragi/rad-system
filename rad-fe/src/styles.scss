@@ -1,0 +1,197 @@
+@use "@angular/material" as mat;
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  @include mat.theme(
+    (
+      color: mat.$blue-palette,
+      typography: Roboto,
+      density: -2,
+    )
+  );
+}
+
+/*  Material overrides */
+mat-form-field {
+  width: 100%;
+  margin: 8px 0;
+}
+
+.cdk-overlay-pane.mat-mdc-select-panel-above {
+  width: fit-content !important;
+}
+
+.to-upper {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.mat-mdc-dialog-surface.mdc-dialog__surface {
+  overflow-x: hidden !important;
+  padding: 15px !important;
+  border-radius: 8px !important;
+  border: 1px solid var(--mat-sys-on-background) !important;
+}
+
+/* Global typography styles */
+body {
+  font-size: 16px;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.main-content {
+  background-color: var(--mat-sys-background);
+  color: var(--mat-sys-on-background);
+  opacity: 0.96;
+}
+
+.primary {
+  background-color: var(--mat-sys-background) !important;
+  color: #2196f3 !important;
+}
+
+.accent {
+  background-color: var(--mat-sys-background) !important;
+  color: #ff9800 !important;
+}
+
+.warn {
+  background-color: var(--mat-sys-background) !important;
+  color: #f44336 !important;
+}
+
+.error-snackbar > div {
+  background-color: #f44336 !important;
+}
+
+.success-snackbar > div {
+  background-color: #18501a !important;
+}
+
+.warning-snackbar > div {
+  background-color: #ff9800 !important;
+}
+
+.error-snackbar > div {
+  background-color: #f44336 !important;
+}
+
+.info-snackbar > div {
+  background-color: #2196f3 !important;
+  color: #333 !important;
+}
+
+.delete-button {
+  color: #f44336 !important;
+}
+
+.icon-column {
+  width: 50px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.date-column {
+  width: 130px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.actions-column {
+  text-align: right;
+  white-space: nowrap;
+  width: max-content;
+
+  button {
+    cursor: pointer;
+    border: none;
+    background: none;
+  }
+}
+
+.form-chip-listbox {
+  margin-bottom: 1.5rem;
+  border: 1px solid;
+  padding: 0px 10px 10px 10px;
+
+  .mat-label {
+    display: inline-block;
+    margin-bottom: 0;
+    font-size: 0.8rem;
+    position: relative;
+    top: -10px;
+    background: var(--mat-sys-background);
+    padding: 0 5px 0px 5px;
+  }
+}
+
+/* --------- LAYOUTS Helper ------------ */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  align-items: start;
+
+  &.form-grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  &.form-grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+
+    &.form-grid-4 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+
+    &.form-grid-4 {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+/* ---------- Aggiungere qui altri elementi da nascondere quando si stampa ---------- */
+@media print {
+  html,
+  body {
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: white !important;
+  }
+
+  .main-content,
+  .chat-container,
+  .chat-content-wrapper,
+  .chat-main,
+  .chat-messages {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: white !important;
+    overflow: visible !important;
+    position: static !important;
+  }
+
+  .chat-input,
+  .input-actions,
+  .chat-history-container,
+  .user-info-row {
+    display: none !important;
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "appName": "RAG System",
+  "apiUrl": "http://localhost:3000/api/v1",
+  "logMode": "console",
+  "siteMode": "development",
+  "version": "1.0.0",
+  "langs": [
+    {
+      "code": "en",
+      "label": "ENG",
+      "description": "English",
+      "langEn": "English"
+    },
+    {
+      "code": "it",
+      "label": "ITA",
+      "description": "Italiano",
+      "langEn": "Italian"
+    }
+  ],
+  "modelTagRegex": "[\\[\\(](?:§|REF-|SOURCE-)?(\\d+)[\\]\\)]",
+  "google": {
+    "clientId": "YOUR_GOOGLE_CLIENT_ID",
+    "redirectUri": "http://localhost:4200",
+    "button": {
+      "theme": "outline",
+      "size": "large",
+      "text": "continue_with",
+      "logo_alignment": "left"
+    },
+    "analyticsId": "YOUR_GOOGLE_ANALYTICS_ID"
+  },
+  "uploadConfig": {
+    "maxFileSize": 50,
+    "maxFileCount": 5,
+    "acceptedFileTypes": "*/*",
+    "allowMultiple": false
+  },
+  "menus": {
+    "guest": [
+      {
+        "label": "Home",
+        "icon": "home",
+        "route": "/"
+      },
+      {
+        "label": "Login",
+        "icon": "login",
+        "route": "/login"
+      }
+    ],
+    "user": [
+      {
+        "label": "RAG Chat Dashboard",
+        "icon": "auto_awesome",
+        "route": "/dashboard"
+      }
+    ],
+    "admin": [
+      {
+        "label": "_DIVIDER_"
+      },
+      {
+        "label": "Config",
+        "icon": "settings",
+        "route": "/admin-config"
+      },
+      {
+        "label": "Admin dashboard",
+        "icon": "dashboard",
+        "route": "/admin-dashboard"
+      },
+      {
+        "label": "Manage Models",
+        "icon": "auto_awesome",
+        "route": "/models"
+      },
+      {
+        "label": "Manage Contexts",
+        "icon": "analytics",
+        "route": "/contexts"
+      },
+      {
+        "label": "Manage Documents",
+        "icon": "storage",
+        "route": "/documents"
+      },
+      {
+        "label": "Manage Departments",
+        "icon": "domain",
+        "route": "/departments"
+      },
+      {
+        "label": "Manage Users",
+        "icon": "people",
+        "route": "/users"
+      }
+    ]
+  }
+}

@@ -1,0 +1,57 @@
+# =================================================================
+# DOCKER & DEVOPS
+# =================================================================
+
+# Ignora tutti i dati persistenti nei volumi locali.
+# La struttura delle cartelle è preservata tramite i file .keep
+Docker/Volumes/*
+!Docker/Volumes/.keep
+
+# Ignora i file di ambiente con le credenziali (non vanno su Git)
+Docker/Config/backend/.env
+Docker/.env
+rad-be/.env
+rad-fe/.env
+*.env
+!*.env.example
+
+# Ignora il contenuto "pesante" degli assets del frontend,
+# ma mantieni la cartella 'config' e il suo contenuto.
+# Docker/Config/frontend/assets/i18n/*
+# Docker/Config/frontend/assets/img/*
+Docker/Config/frontend/assets/fonts/*
+
+# Ignora configurazioni locali frontend
+**/app-config.json
+!**/app-config.json.example
+
+# Ignora cartelle temporanee e di build di DevOps
+DevOps/tmp/
+DevOps/update/
+
+# Ignora i log
+logs/
+*.log
+
+# =================================================================
+# NODE / ANGULAR / NESTJS
+# =================================================================
+.angular/
+node_modules/
+dist/
+.npm/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# =================================================================
+# EDITOR & OS
+# =================================================================
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+.DS_Store
+Thumbs.db

@@ -1,0 +1,93 @@
+.pdf-viewer-container {
+  height: calc(100vh - 60px);
+  display: flex;
+  flex-direction: column;
+}
+
+.pdf-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px;
+  height: 64px;
+
+  button {
+    background: transparent !important;
+    border: none !important;
+    cursor: pointer;
+  }
+
+  .toolbar-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    min-width: 0;
+
+    .pdf-icon {
+      font-size: 24px;
+    }
+
+    .pdf-title {
+      font-size: 16px;
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .search-field {
+      width: 250px;
+      margin: 0px;
+
+      ::ng-deep .mat-mdc-form-field-wrapper {
+        padding-bottom: 0;
+      }
+
+      // Reduce overall form field height
+      ::ng-deep .mat-mdc-form-field-flex {
+        min-height: 32px;
+        height: 32px;
+      }
+
+      ::ng-deep input.mat-input-element,
+      ::ng-deep input.mat-mdc-input-element {
+        padding: 4px 0px;
+        font-size: 0.95rem;
+        height: 24px;
+        line-height: 24px;
+      }
+
+      ::ng-deep .mat-mdc-form-field-infix {
+        min-height: 0;
+        padding: 0;
+      }
+    }
+  }
+
+  .toolbar-center {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .page-info {
+      min-width: 70px;
+      text-align: center;
+      font-size: 14px;
+    }
+  }
+
+  .toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    justify-content: flex-end;
+
+    .zoom-info {
+      min-width: 50px;
+      text-align: center;
+      font-size: 14px;
+    }
+  }
+}

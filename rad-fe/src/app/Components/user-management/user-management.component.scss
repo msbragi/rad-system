@@ -1,0 +1,62 @@
+.user-management-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 1rem;
+
+  .user-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    padding: 0.5rem 1rem;
+
+    .spacer {
+      flex: 1;
+    }
+
+    .filter-field,
+    .search-field {
+      width: 200px;
+    }
+  }
+
+  .user-list {
+    flex: 1;
+    overflow: auto;
+
+    table {
+      width: 100%;
+
+      th {
+        font-weight: 600;
+      }
+
+      td,
+      th {
+        padding: 0.75rem;
+      }
+    }
+
+    .empty-list {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem;
+      color: rgba(0, 0, 0, 0.6);
+
+      mat-icon {
+        font-size: 64px;
+        width: 64px;
+        height: 64px;
+        margin-bottom: 1rem;
+        opacity: 0.5;
+      }
+
+      span {
+        font-size: 1.1rem;
+      }
+    }
+  }
+}

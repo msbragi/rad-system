@@ -1,0 +1,62 @@
+<div class="menu-container" [class.collapsed]="collapsed">
+  <!-- Display menu items once loaded -->
+  @if (menuItems.length > 0) {
+    <mat-nav-list>
+      @for (item of menuItems; track item) {
+        <!-- Regular menu item without children -->
+        @if (item.label == "_DIVIDER_") {
+          <mat-divider></mat-divider>
+        } @else {
+          @if (!item.children?.length) {
+            <a
+              mat-list-item
+              [routerLink]="item.route"
+              routerLinkActive="active-link"
+              [routerLinkActiveOptions]="{
+                exact: item.route === '/' || item.route === '/home',
+              }"
+            >
+              <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+              @if (!collapsed) {
+                <span matListItemTitle>{{ item.label }}</span>
+              }
+            </a>
+          }
+        }
+        <!-- Menu item with children (submenu) -->
+        @if (item.children?.length) {
+          <mat-expansion-panel
+            [expanded]="false"
+            class="mat-elevation-z0 menu-expansion"
+          >
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <mat-icon>{{ item.icon }}</mat-icon>
+                @if (!collapsed) {
+                  <span>{{ item.label }}</span>
+                }
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <!-- Submenu items -->
+            <mat-nav-list dense>
+              @for (child of item.children; track child) {
+                <a
+                  mat-list-item
+                  [routerLink]="child.route"
+                  routerLinkActive="active-link"
+                  [routerLinkActiveOptions]="{
+                    exact: child.route === '/' || child.route === '/home',
+                  }"
+                  class="submenu-item"
+                >
+                  <mat-icon matListItemIcon>{{ child.icon }}</mat-icon>
+                  <span matListItemTitle>{{ child.label }}</span>
+                </a>
+              }
+            </mat-nav-list>
+          </mat-expansion-panel>
+        }
+      }
+    </mat-nav-list>
+  }
+</div>

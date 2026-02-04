@@ -1,0 +1,71 @@
+@if (displayMode === "banner") {
+  <div class="cookie-banner" *transloco="let t">
+    <mat-card class="cookie-banner-card">
+      <!-- Close button -->
+      <button
+        mat-icon-button
+        class="banner-close-btn"
+        (click)="onDismissBanner()"
+        [matTooltip]="t('cookies.banner.close')"
+        matTooltipPosition="below"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+
+      <div class="banner-content">
+        <div class="banner-info">
+          <div class="banner-icon">
+            <mat-icon>cookie</mat-icon>
+          </div>
+          <div class="banner-text">
+            <h3>{{ t("cookies.banner.title") }}</h3>
+            <p>{{ t("cookies.banner.description") }}</p>
+          </div>
+        </div>
+
+        <div class="banner-actions">
+          <button
+            mat-button
+            color="primary"
+            (click)="onManagePreferences()"
+            class="manage-btn"
+          >
+            {{ t("cookies.banner.manage") }}
+          </button>
+
+          <button
+            mat-button
+            (click)="onAcceptNecessaryOnly()"
+            class="necessary-btn"
+          >
+            {{ t("cookies.banner.necessary_only") }}
+          </button>
+
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="onAcceptAll()"
+            class="accept-btn"
+          >
+            {{ t("cookies.banner.accept_all") }}
+          </button>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+}
+
+@if (displayMode === "icon") {
+  <div class="cookie-icon-fab" *transloco="let t">
+    <button
+      mat-fab
+      color="primary"
+      (click)="onManagePreferences()"
+      [matTooltip]="t('cookies.preferences.title')"
+      matTooltipPosition="above"
+      class="cookie-fab-button"
+    >
+      <mat-icon>cookie</mat-icon>
+    </button>
+  </div>
+}

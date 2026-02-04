@@ -1,0 +1,2 @@
+CREATE USER rad_user WITH PASSWORD 'rad123!';
+CREATE DATABASE rad_db OWNER rad_user;

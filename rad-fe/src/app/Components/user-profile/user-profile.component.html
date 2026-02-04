@@ -1,0 +1,135 @@
+<div *transloco="let t" class="profile-container">
+  <mat-card class="profile-card" appearance="outlined">
+    <mat-card-header>
+      <div class="profile-header">
+        <h2>{{ t("profile.title") }}</h2>
+        @if (!editMode) {
+          <button mat-button color="primary" (click)="toggleEditMode()">
+            <mat-icon>edit</mat-icon> {{ t("profile.edit") }}
+          </button>
+        }
+        @if (editMode) {
+          <button mat-button color="warn" (click)="toggleEditMode()">
+            <mat-icon>close</mat-icon> {{ t("common.cancel") }}
+          </button>
+        }
+      </div>
+    </mat-card-header>
+
+    <mat-card-content>
+      <!-- View mode -->
+      @if (!editMode) {
+        <div class="profile-view">
+          <div class="avatar-container">
+            <img
+              [src]="getAvatarUrl()"
+              [alt]="user?.fullName || t('profile.user')"
+              class="profile-avatar"
+            />
+          </div>
+          <div class="profile-details">
+            <p class="detail-row">
+              <span class="detail-label">{{ t("profile.username") }}:</span>
+              <span class="detail-value">{{ user?.username }}</span>
+            </p>
+            <p class="detail-row">
+              <span class="detail-label">{{ t("profile.email") }}:</span>
+              <span class="detail-value">{{ user?.email }}</span>
+            </p>
+            <p class="detail-row">
+              <span class="detail-label">{{ t("profile.fullName") }}:</span>
+              <span class="detail-value">{{
+                user?.fullName || t("profile.not_provided")
+              }}</span>
+            </p>
+            <mat-card-actions class="profile-action-buttons">
+              <button
+                mat-button
+                color="warn"
+                (click)="navigateToChangePassword()"
+              >
+                {{ t("profile.changePassword") }}
+              </button>
+            </mat-card-actions>
+          </div>
+        </div>
+      }
+
+      <!-- Edit mode -->
+      @if (editMode) {
+        <form
+          [formGroup]="profileForm"
+          (ngSubmit)="onSubmit()"
+          class="profile-form"
+        >
+          <div class="avatar-container">
+            <img
+              [src]="getAvatarUrl()"
+              alt="Profile Avatar"
+              class="profile-avatar"
+            />
+          </div>
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>{{ t("profile.username") }}</mat-label>
+            <input matInput formControlName="username" readonly />
+            <mat-hint>{{ t("profile.username_readonly") }}</mat-hint>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>{{ t("profile.email") }}</mat-label>
+            <input matInput formControlName="email" readonly />
+            <mat-hint>{{ t("profile.email_readonly") }}</mat-hint>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>{{ t("profile.fullName") }}</mat-label>
+            <input matInput formControlName="fullName" />
+            @if (profileForm.get("fullName")?.hasError("maxlength")) {
+              <mat-error>
+                {{ t("profile.fullName_too_long") }}
+              </mat-error>
+            }
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>{{ t("profile.avatar") }}</mat-label>
+            <input matInput formControlName="avatar" placeholder="https://" />
+            @if (profileForm.get("avatar")?.value) {
+              <button
+                mat-icon-button
+                matSuffix
+                type="button"
+                (click)="removeAvatar()"
+                [matTooltip]="t('profile.remove_avatar')"
+              >
+                <mat-icon>clear</mat-icon>
+              </button>
+            }
+            @if (profileForm.get("avatar")?.hasError("pattern")) {
+              <mat-error>
+                {{ t("profile.avatar_url_invalid") }}
+              </mat-error>
+            }
+            <mat-hint>{{ t("profile.avatar_hint") }}</mat-hint>
+          </mat-form-field>
+          <div class="button-container">
+            <button mat-button (click)="toggleEditMode()" type="button">
+              {{ t("common.cancel") }}
+            </button>
+            <button
+              mat-raised-button
+              color="primary"
+              type="submit"
+              [disabled]="profileForm.invalid || saving"
+            >
+              <mat-icon>save</mat-icon>
+              @if (!saving) {
+                <span>{{ t("common.save") }}</span>
+              }
+              @if (saving) {
+                <span>{{ t("common.saving") }}</span>
+              }
+            </button>
+          </div>
+        </form>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,18 @@
+.confirm.mat-toolbar {
+  padding: 10px !important;
+}
+
+.confirm.mat-toolbar span {
+  font-size: 16px !important;
+}
+
+.mat-mdc-dialog-actions {
+  display: flex;
+  justify-content: end;
+
+  .button {
+    min-width: 100px;
+    margin: 5px 10px;
+    cursor: pointer;
+  }
+}

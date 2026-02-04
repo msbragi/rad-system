@@ -1,0 +1,54 @@
+<div class="login-container" *transloco="let t">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Login</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <mat-form-field>
+          <mat-label>{{ t("login.emailLabel") }}</mat-label>
+          <input
+            matInput
+            formControlName="identifier"
+            placeholder="{{ t('login.emailInput') }}"
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{ t("login.passwordLabel") }}</mat-label>
+          <input
+            matInput
+            #password
+            [type]="inputPassword"
+            formControlName="password"
+            placeholder="{{ t('login.passwordInput') }}"
+          />
+          <button
+            style="margin: 0px 5px 0px 0px"
+            (click)="viewPassword()"
+            mat-icon-button
+            matSuffix
+            type="button"
+          >
+            <mat-icon>visibility_off</mat-icon>
+          </button>
+        </mat-form-field>
+        <div class="forgot-row">
+          <button mat-button color="warn" (click)="forgotPassword()">
+            {{ t("login.forgotPwdButton") }}
+          </button>
+        </div>
+        <div class="footer-content">
+          <button
+            mat-raised-button
+            color="primary"
+            class="login-btn"
+            type="submit"
+            [disabled]="loginForm.invalid"
+          >
+            {{ t("login.loginButton") }}
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

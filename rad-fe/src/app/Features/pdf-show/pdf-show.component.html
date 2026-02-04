@@ -1,0 +1,81 @@
+<div class="pdf-viewer-container" *transloco="let t">
+  @if (showToolbar && totalPages > 0) {
+    <mat-toolbar color="primary" class="pdf-toolbar">
+      <div class="toolbar-left">
+        <mat-icon class="pdf-icon">picture_as_pdf</mat-icon>
+        <span class="pdf-title">{{ pdfFilename }}</span>
+
+        <!-- Search -->
+        <mat-form-field class="search-field">
+          <input
+            matInput
+            type="text"
+            [value]="searchText"
+            (input)="onSearchChange($event)"
+            [placeholder]="t('common.find')"
+          />
+          @if (searchText) {
+            <button mat-icon-button matSuffix (click)="clearSearch()">
+              <mat-icon>close</mat-icon>
+            </button>
+          }
+        </mat-form-field>
+      </div>
+
+      <div class="toolbar-center">
+        <!-- Navigation -->
+        <button
+          mat-icon-button
+          (click)="prevPage()"
+          [disabled]="currentPage <= 1"
+          aria-label="Previous page"
+        >
+          <mat-icon>chevron_left</mat-icon>
+        </button>
+        <span class="page-info">{{ currentPage }} / {{ totalPages }}</span>
+        <button
+          mat-icon-button
+          (click)="nextPage()"
+          [disabled]="currentPage >= totalPages"
+          aria-label="Next page"
+        >
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+      </div>
+
+      <div class="toolbar-right">
+        <!-- Zoom -->
+        <button mat-icon-button (click)="zoomOut()" aria-label="Zoom out">
+          <mat-icon>zoom_out</mat-icon>
+        </button>
+        <span class="zoom-info">{{ zoom * 100 | number: "1.0-0" }}%</span>
+        <button mat-icon-button (click)="zoomIn()" aria-label="Zoom in">
+          <mat-icon>zoom_in</mat-icon>
+        </button>
+
+        <a [href]="url" [attr.download]="pdfFilename">
+          <button
+            mat-icon-button
+            [matTooltip]="t('common.tooltips.open_in_browser')"
+          >
+            <mat-icon>open_in_browser</mat-icon>
+          </button>
+        </a>
+      </div>
+    </mat-toolbar>
+  }
+
+  <!-- PDF Viewer -->
+  <pdf-viewer
+    [src]="url"
+    [(page)]="currentPage"
+    [show-all]="true"
+    [original-size]="true"
+    [zoom]="zoom"
+    [render-text]="true"
+    [external-link-target]="'_blank'"
+    (after-load-complete)="onPdfLoaded($event)"
+    (text-layer-rendered)="onTextLayerRendered($event)"
+    style="display: block; width: 100%; height: calc(100vh - 64px)"
+  ></pdf-viewer>
+</div>
