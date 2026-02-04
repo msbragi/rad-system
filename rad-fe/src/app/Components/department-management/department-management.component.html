@@ -1,0 +1,51 @@
+<div class="department-list" *transloco="let t;">
+  <div class="header">
+    <h2>{{ t('departments.title') }}</h2>
+    <button mat-raised-button color="primary" (click)="openCreateDialog()">
+      <mat-icon>add</mat-icon>
+      {{ t('departments.createDepartment') }}
+    </button>
+  </div>
+
+  <div class="table-container">
+    <table mat-table [dataSource]="departments" class="mat-elevation-z2">
+      <!-- Name Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>{{ t('departments.id') }}</th>
+        <td mat-cell *matCellDef="let department">{{ department.id }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="code">
+        <th mat-header-cell *matHeaderCellDef>{{ t('departments.code') }}</th>
+        <td mat-cell *matCellDef="let department">{{ department.code }}</td>
+      </ng-container>
+
+      <!-- Description Column -->
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef>{{ t('departments.description') }}</th>
+        <td mat-cell *matCellDef="let department">{{ department.description }}</td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>{{ t('common.actions') }}</th>
+        <td mat-cell *matCellDef="let department">
+          <button mat-icon-button 
+                  [matTooltip]="t('common.edit')" 
+                  (click)="openEditDialog(department)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button 
+                  color="warn" 
+                  [matTooltip]="t('common.delete')" 
+                  (click)="deleteDepartment(department)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+</div>

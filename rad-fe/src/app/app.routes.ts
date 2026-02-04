@@ -49,12 +49,16 @@ export const routes: Routes = [
       ),
   },
   {
-    path: "view-pdf",
-    canActivate: [authGuard],
-    loadComponent: () =>
-      import("./Features/pdf-show/pdf-show.component").then(
-        (c) => c.PdfShowComponent,
-      ),
+    path: 'departments',
+    canActivate: [adminGuard],
+    loadComponent: () => import('./Components/department-management/department-management.component')
+      .then(c => c.DepartmentManagementComponent)
+  },
+  {
+    path: 'admin-config',
+    canActivate: [adminGuard],
+    loadComponent: () => import('./Components/config-management/config-management.component')
+      .then(c => c.ConfigManagementComponent)
   },
   {
     path: "wellcome",
@@ -63,5 +67,13 @@ export const routes: Routes = [
         (c) => c.WellcomeComponent,
       ),
   },
+  //  {
+  //    path: "view-pdf",
+  //    canActivate: [authGuard],
+  //    loadComponent: () =>
+  //      import("./Features/pdf-show/pdf-show.component").then(
+  //        (c) => c.PdfShowComponent,
+  //      ),
+  //  },
   { path: "**", redirectTo: "wellcome" },
 ];

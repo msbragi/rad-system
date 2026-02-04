@@ -27,7 +27,7 @@ export class MyService {
 ### User Notifications
 Use `SnackbarService` for all user feedback.
 ```typescript
-this.snackbar.showSuccess('common.save_success');
+this.snackbar.success('common.save_success');
 ```
 
 ### Loading States

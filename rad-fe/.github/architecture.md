@@ -5,7 +5,7 @@
 > **Purpose**: High-level overview of architecture and data flow for AI assistants
 
 ## Core Structure & Data Flow
-- **Angular 20** with **standalone components** and OnPush change detection
+- **Angular 21** with **standalone components** and OnPush change detection
 - Smart/dumb component pattern for separation of logic and UI
 - API communication via `ApiService` (never direct `HttpClient`)
 - Centralized error handling in services, not components

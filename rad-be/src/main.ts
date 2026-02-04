@@ -49,6 +49,8 @@ async function bootstrap() {
         .setDescription('📚 RAD System API Documentation')
         .addTag('RAD System Api', 'Rapid development infrastructure for nestjs and angular')
         .addTag('auth', 'RAD authentication management')
+        .addTag('departments', 'RAD Departments')
+        .addTag('configuration', 'RAD Configuration')
         .addTag('users', 'RAD users management')
         .addBearerAuth(
             {

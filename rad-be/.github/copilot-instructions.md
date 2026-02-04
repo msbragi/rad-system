@@ -1,64 +1,22 @@
-# Backend AI Agent Guide
+# Backend Architecture & NestJS Standards
 
-Refer to the main [root copilot instructions](../../.github/copilot-instructions.md) for all general rules, architecture, and workflows.
+## 1. Context & Paths
+- **Framework**: NestJS 11, TypeORM, PostgreSQL.
+- **BASE_DIR**: `/workspace/angular/rad-system/rad-be`.
 
-## Backend-Specific Docs
-- [Architecture](./architecture.md)
-- [Quick Reference & Patterns](./quick-reference-patterns.md)
-- **DO NOT** create or execute DB migration scripts.
-    - **Instead:** Provide the data structure and the developer will apply DB changes.
+## 2. Core Components & Patterns (Re-use first)
+- **Base Classes**: All entities must extend `BaseEntity`. All services must extend `BaseService`.
+- **Interfaces**: Always prefix with `I` (e.g., `IUser`).
+- **Security Decorators**: Use `@User()`, `@Public()`, and `@Admin()` for access control.
+- **Common Helpers**: Check `${BASE_DIR}/src/common/` for shared guards, interceptors, and decorators before creating new ones.
 
----
+## 3. Strict Rules
+- **Ownership**: Every sensitive operation MUST implement `checkOwnership`.
+- **Repositories**: NEVER use repositories directly in controllers; always go through a service.
+- **Validation**: Use DTOs with `class-validator` for all inputs.
 
-### Before Writing Any Code
-- **ASK TO DEVELOPER:** Where to find examples or guidelines for the feature you’re working on.   
-- **Always extend `BaseService`** for CRUD operations.
-- When in @agent mode, **ask for confirmation before making changes**.
-- Check `todo.md` for pending tasks.
-
----
-
-### Core Architecture & Patterns
-
-- **Security:**  
-  - JWT authentication is required.
-  - Always validate ownership and permissions.
-
-- **Database:**  
-  - All entities extends [BaseEntity](`../../src/common/entities/base.entity`)
-  - Use interfaces per consistency 
-  - All interface name is prefixed with I and follow the pattern I{Namesingular} ex: IUser
-  - Define proper entity relationships and validation.
-
----
-
-### Security Standards
-
-- Always implement ownership validation in services.
-- Use the `@Public()` decorator only for truly public endpoints.
-- Use the `@Admin()` decorator per required admin or super_user role.
-- Validate all inputs with DTOs, interfaces and `class-validator`.
-- Follow authentication patterns with the `@User()` decorator.
-
----
-
-### Development Standards
-
-- Comment code only if complex or unclear.
-- Use TypeScript strictly with comprehensive typing.
-- Follow clean architecture principles.
-- Implement proper error handling with NestJS exceptions.
-
----
-
-### Workflow for New Features or Changes
-
-1. **Before you start:**
-    - Ask where to find examples or guidelines for the feature you’re working on.
-    - Confirm how to reuse existing libraries or services.
-
-2. **For any uncertainty:**
-    - Ask for guidance or examples before writing code.
-
----
-
+## 4. Workflow (BMAD)
+1. **Brief**: Re-state the logic.
+2. **Models**: Define Entity, Interface, and DTOs.
+3. **Architecture**: Extend `BaseService`, implement `checkOwnership`.
+4. **Delivery**: Code implementation.

@@ -1,0 +1,41 @@
+.department-list {
+  padding: 2rem;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+
+    h2 {
+      margin: 0;
+    }
+
+    button {
+      mat-icon {
+        margin-right: 0.5rem;
+      }
+    }
+  }
+
+  .table-container {
+    overflow-x: auto;
+
+    table {
+      width: 100%;
+
+      th {
+        font-weight: 600;
+      }
+
+      td, th {
+        padding: 1rem;
+      }
+
+      .mat-column-actions {
+        width: 120px;
+        text-align: right;
+      }
+    }
+  }
+}

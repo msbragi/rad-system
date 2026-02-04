@@ -1,12 +1,13 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import * as nodemailer from 'nodemailer';
-import * as hbs from 'handlebars';
+import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
+import { OnEvent } from '@nestjs/event-emitter';
 import * as fs from 'fs';
-import { join, extname } from 'path';
+import * as hbs from 'handlebars';
+import * as nodemailer from 'nodemailer';
+import { join } from 'path';
+import { RadConfigService } from '../config/config.service';
 
 @Injectable()
-export class MailerService {
+export class MailerService implements OnModuleInit {
   private readonly logger = new Logger(MailerService.name);
   private transporter: nodemailer.Transporter;
   private templateBasePath: string;
@@ -15,7 +16,20 @@ export class MailerService {
   private defaultLanguage = 'en';
   private emailBcc: string = '';
 
-  constructor(private configService: ConfigService) {
+  constructor(private configService: RadConfigService) {
+  }
+
+  onModuleInit() {
+    this.initializeMailer();
+  }
+
+  @OnEvent('config.reloaded')
+  async onConfigReloaded() {
+    this.initializeMailer();
+  }
+
+  private initializeMailer() {
+    const configService = this.configService;
     this.transporter = nodemailer.createTransport({
       host: configService.get<string>('MAIL_HOST'),
       port: configService.get<number>('MAIL_PORT'),
@@ -27,11 +41,9 @@ export class MailerService {
     });
     this.templateBasePath = configService.get<string>('EMAIL_TEMPLATE_PATH') || join(__dirname, 'templates');
 
-    // Load supported languages from .env
     const langs = configService.get<string>('MAIL_LANGUAGES', 'en');
     this.supportedLanguages = langs.split(',').map(l => l.trim()).filter(Boolean);
 
-    // Load email subjects from JSON
     const subjectsPath = join(this.templateBasePath, 'email-subjects.json');
     try {
       this.emailSubjects = JSON.parse(fs.readFileSync(subjectsPath, 'utf-8'));

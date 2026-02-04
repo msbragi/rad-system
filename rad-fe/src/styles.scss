@@ -1,20 +1,19 @@
-@use "@angular/material" as mat;
+@use '@angular/material' as mat;
+@import "jsoneditor/dist/jsoneditor.min.css";
 
 html,
 body {
   height: 100%;
   margin: 0;
   padding: 0;
+  /* TODO: has problem */
+  /* overflow-y: hidden; */ 
 }
 
 html {
-  @include mat.theme(
-    (
-      color: mat.$blue-palette,
+  @include mat.theme((color: mat.$blue-palette,
       typography: Roboto,
-      density: -2,
-    )
-  );
+      density: -2));
 }
 
 /*  Material overrides */
@@ -66,23 +65,24 @@ body {
   color: #f44336 !important;
 }
 
-.error-snackbar > div {
+.error-snackbar>div {
   background-color: #f44336 !important;
 }
 
-.success-snackbar > div {
+
+.success-snackbar>div {
   background-color: #18501a !important;
 }
 
-.warning-snackbar > div {
+.warning-snackbar>div {
   background-color: #ff9800 !important;
 }
 
-.error-snackbar > div {
+.error-snackbar>div {
   background-color: #f44336 !important;
 }
 
-.info-snackbar > div {
+.info-snackbar>div {
   background-color: #2196f3 !important;
   color: #333 !important;
 }
@@ -123,7 +123,7 @@ body {
   .mat-label {
     display: inline-block;
     margin-bottom: 0;
-    font-size: 0.8rem;
+    font-size: 0.80rem;
     position: relative;
     top: -10px;
     background: var(--mat-sys-background);
@@ -162,8 +162,10 @@ body {
     }
   }
 }
+
 /* ---------- Aggiungere qui altri elementi da nascondere quando si stampa ---------- */
 @media print {
+
   html,
   body {
     height: auto !important;
@@ -194,4 +196,199 @@ body {
   .user-info-row {
     display: none !important;
   }
+}
+
+
+/* -----------------------------------------
+--- JSON EDITOR GLOBAL SETTINGS 
+-------------------------------------------*/
+.ace_editor .ace_marker-layer .ace_active-line {
+  background-color: var(--mat-sys-surface) !important; // Sfondo del contenitore principale
+  color: var(--mat-sys-on-surface) !important; // Colore del testo generale
+}
+
+// You might also want to ensure the general text color is consistent
+.jsoneditor-ace .ace_editor {
+  color: var(--mat-sys-on-surface) !important; // Colore del testo generale
+}
+
+.jsoneditor {
+  border: none !important;
+  background-color: var(--mat-sys-surface) !important; // Sfondo del contenitore principale
+  color: var(--mat-sys-on-surface) !important; // Colore del testo generale
+  height: 100% !important;
+}
+
+// Menu superiore (bottoni, modalità, search)
+.jsoneditor-menu {
+  background-color: var(--mat-sys-surface-container) !important;
+  border-bottom: 1px solid var(--mat-sys-outline) !important;
+  color: var(--mat-sys-on-surface) !important;
+}
+
+// Navigation bar (the bright one)
+.jsoneditor-navigation-bar {
+  background-color: var(--mat-sys-surface-container) !important;
+  border-bottom: 1px solid var(--mat-sys-outline) !important;
+  color: var(--mat-sys-on-surface-variant) !important;
+}
+
+// Bottoni nel menu
+.jsoneditor-menu button {
+  color: var(--mat-sys-primary) !important;
+  background-color: transparent !important;
+  cursor:pointer;
+}
+
+.jsoneditor-menu button:hover {
+  background-color: rgba(var(--mat-sys-primary-rgb), 0.08) !important;
+  color: var(--mat-sys-primary) !important;
+}
+
+.jsoneditor-menu button:focus {
+  background-color: rgba(var(--mat-sys-primary-rgb), 0.12) !important;
+  color: var(--mat-sys-primary) !important;
+}
+
+// Icone SVG nel menu
+.jsoneditor-menu button svg {
+  fill: var(--mat-sys-primary) !important;
+}
+
+// Separatori nel menu
+.jsoneditor-menu .jsoneditor-separator {
+  border-color: var(--mat-sys-outline-variant) !important;
+}
+
+// Albero e Textarea (editor effettivo)
+.jsoneditor-tree,
+.jsoneditor textarea.jsoneditor-text {
+  background-color: var(--mat-sys-surface) !important;
+  color: var(--mat-sys-on-surface) !important;
+}
+
+// Ace Editor (modalità code)
+.jsoneditor .ace_editor {
+  background-color: var(--mat-sys-surface) !important;
+}
+
+.jsoneditor .ace_gutter {
+  background-color: var(--mat-sys-surface-container) !important;
+  color: var(--mat-sys-on-surface-variant) !important;
+}
+
+.jsoneditor .ace_scroller {
+  background-color: var(--mat-sys-surface) !important;
+}
+
+.jsoneditor .ace_content {
+  background-color: var(--mat-sys-surface) !important;
+}
+
+.jsoneditor .ace_text-layer {
+  color: var(--mat-sys-on-surface) !important;
+}
+
+// Sintassi highlighting per Ace Editor
+.jsoneditor .ace_string {
+  color: var(--mat-sys-tertiary) !important;
+}
+
+.jsoneditor .ace_variable {
+  color: var(--mat-sys-primary) !important;
+}
+
+.jsoneditor .ace_constant.ace_numeric {
+  color: var(--mat-sys-error) !important;
+}
+
+.jsoneditor .ace_constant.ace_language {
+  color: var(--mat-sys-secondary) !important;
+}
+
+// Campi e valori
+div.jsoneditor-field,
+div.jsoneditor-value {
+  color: var(--mat-sys-on-surface) !important;
+}
+
+// Separatori (virgole, due punti)
+div.jsoneditor td.jsoneditor-separator {
+  color: var(--mat-sys-on-surface-variant) !important; // Colore leggermente più tenue per i separatori
+}
+
+// Highlighting e selezione
+tr.jsoneditor-highlight,
+tr.jsoneditor-selected {
+  background-color: var(--mat-sys-primary-container) !important; // Usa un colore primario per l'highlight
+}
+
+div.jsoneditor-field[contenteditable=true]:focus,
+div.jsoneditor-field[contenteditable=true]:hover,
+div.jsoneditor-value[contenteditable=true]:focus,
+div.jsoneditor-value[contenteditable=true]:hover,
+div.jsoneditor-field.jsoneditor-highlight,
+div.jsoneditor-value.jsoneditor-highlight {
+  background-color: var(--mat-sys-surface-container-high) !important; // Sfondo più scuro per l'interazione
+  border-color: var(--mat-sys-primary) !important; // Bordo del colore principale
+}
+
+// Highlighting attivo (es. ricerca)
+div.jsoneditor-field.highlight-active,
+div.jsoneditor-field.highlight-active:focus,
+div.jsoneditor-field.highlight-active:hover,
+div.jsoneditor-value.highlight-active,
+div.jsoneditor-value.highlight-active:focus,
+div.jsoneditor-value.highlight-active:hover {
+  background-color: var(--mat-sys-tertiary-container) !important; // Usa un colore terziario per highlight ricerca
+  border-color: var(--mat-sys-tertiary) !important;
+}
+
+// Stili dei valori JSON per sintassi highlighting
+div.jsoneditor-readonly {
+  color: var(--mat-sys-on-surface-variant) !important;
+}
+
+// Stringhe (verde brillante originale)
+div.jsoneditor-value.jsoneditor-string {
+  color: var(--mat-sys-tertiary) !important; // Mappato su tertiary per visibilità
+}
+
+// Oggetti e array (grigio chiaro originale)
+div.jsoneditor-value.jsoneditor-object,
+div.jsoneditor-value.jsoneditor-array {
+  color: var(--mat-sys-on-surface) !important;
+}
+
+// Numeri (rosso originale)
+div.jsoneditor-value.jsoneditor-number {
+  color: var(--mat-sys-error) !important; // Mappato su error
+}
+
+// Booleani (arancione originale)
+div.jsoneditor-value.jsoneditor-boolean {
+  color: var(--mat-sys-secondary) !important; // Mappato su secondary
+}
+
+// Null (blu originale)
+div.jsoneditor-value.jsoneditor-null {
+  color: var(--mat-sys-primary) !important; // Mappato su primary
+}
+
+// Invalidi
+div.jsoneditor-value.jsoneditor-invalid {
+  color: var(--mat-sys-on-error) !important; // Testo bianco su errore
+}
+
+// Altezze dell'editor
+.json-editor-container {
+  height: 100% !important;
+  width: 100% !important;
+  display: flex;
+  flex-direction: column;
+}
+
+.jsoneditor-outer {
+  flex: 1;
+  min-height: 0;
 }

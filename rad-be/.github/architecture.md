@@ -21,7 +21,6 @@
 ## Key Integration Points
 - **Email**: `EmailService` with Handlebars templates in 6 languages
 - **Media**: File uploads via Multer, stored per user
-- **Database**: Per-user SQLite DBs managed via `SqliteService`
 
 ## 📁 Project Structure Overview
 
@@ -40,6 +39,7 @@ src/
 │       └── base.service.ts   # Abstract CRUD service with ownership
 └── modules/                  # Feature modules
     ├── auth/                 # Authentication & authorization
+    ├── departments/          # Departments
     └── users/                # User management & statistics
 ```
 

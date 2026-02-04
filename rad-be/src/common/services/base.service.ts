@@ -46,13 +46,13 @@ export abstract class BaseService<T extends BaseEntity> {
      * Perform a soft delete if defined in configuration elese perform delete
      * @param id 
      */
-    async remove(id: number): Promise<void> {
-        // TODO: put configuration for soft delete
-        //await this.repository.softDelete(id);
+    async remove(id: number | string): Promise<void> {
         await this.delete(id);
     }
 
-    async delete(id: number): Promise<void> {
+    async delete(id: number | string): Promise<void> {
+        // TODO: put configuration for soft delete
+        //await this.repository.softDelete(id);
         await this.repository.delete(id);
     }
 

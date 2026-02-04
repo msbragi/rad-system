@@ -1,49 +1,27 @@
-# Frontend AI Agent Guide
+# Frontend Architecture & Angular 21 Standards
 
-Refer to the main [root copilot instructions](../../.github/copilot-instructions.md) for all general rules, architecture, and workflows.
+## 1. Context & Tech Stack
+- **Framework**: Angular 21, Standalone Components, Angular Material.
+- **BASE_DIR**: `/workspace/angular/rad-system/rad-fe`.
 
-## Frontend-Specific Docs
-- [Architecture](./architecture.md)
-- [Quick Reference & Patterns](./quick-reference-patterns.md)
-- [Open API reference for services](../../rag-openapi3-spec.json)
+## 2. Core Services & Components (Re-use first)
+- **API**: Use `ApiService` for all calls (extends `HttpClient` logic).
+- **UI Feedback**: Use `SnackbarService` (notifications) and `LoadingService` (spinners).
+- **Storage**: Use `StoreService` for state/local storage.
+- **Utilities**: Check `src/app/Utils/` and `src/app/Pipes/` (e.g., `DateFormatPipe`) before coding helpers.
 
-- **DO NOT** create or execute DB migration scripts.
-    - **Instead:** Provide the data structure and the developer will apply DB changes.
+## 3. Strict UI Rules
+- **Control Flow**: ONLY `@if`, `@for`, `@switch`.
+- **Error Handling**: NO error callbacks in components; handled by `Core/interceptors/`.
+- **i18n**: All text must use `transloco` keys from `assets/i18n/`.
 
----
+## 4. Project Structure Reference
+- `src/app/Core/`: Guards, interceptors, core services.
+- `src/app/Features/`: Reusable UI components.
+- `src/app/Componets/`: Feature-specific components.
 
-### Before Writing Any Code
-- **ASK TO DEVELOPER:** Where to find examples or guidelines for the feature you’re working on.   
-- The project uses **Angular 20** with **Angular Material**
-- Always use **standalone components**
-- There are many helper, utilities, and services already written to reuse 
-    ask before implementing inside the component something already existent 
-    for example:
-    * a spinner component activate on every http request
-    * a Store service for configuration
-    * a Snackbar service for displaying messages
-
-### Patterns
-- Use the new Angular syntax @if - @for @switch instead of old *ngIf - *ngFor - *ngSwitch
-- never implement the error callback in subscription inside a component, 
-  errors are trapped at service level
-- When in @agent mode, ask for confirmation before making changes
-
-### Architecture
-- **Services**: Use existing services from `Services/api/` and `Services/common/`
-- **Components**: Use Angular Material components for UI consistency
-- **Forms**: Use Reactive Forms with proper validation
-
-### Translations
-- Use `@jsverse/transloco` with `*transloco="let t"` directive
-- Translation files: Uses json format stored in `assets/i18n/[lang-code].json`
-- Translation files Uses flattened structure for keys ex: `"common.edit": "Edit"`
-
-### Styling
-- Use Angular material components whenever possible and leave angular to set styling
-- Never override Material standards unless explicitly requested
-- Use SCSS with BEM methodology
-- Do not define/override background and color styles
-- Component encapsulation for isolated styles
-
----
+## 5. Workflow (BMAD)
+1. **Brief**: Analyze UI requirements.
+2. **Models**: Define TypeScript interfaces.
+3. **Architecture**: Choose standalone components, define service integration.
+4. **Delivery**: Final code using Reactive Forms and OnPush.

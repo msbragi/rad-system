@@ -1,0 +1,87 @@
+<div class="config-container" *transloco="let t">
+  <div class="main-content-wrapper">
+    <!-- Colonna Sinistra (Form e Controlli) -->
+    <div class="left-panel">
+      <!-- Pannello Controlli Superiori (Select, Add, Delete, Save) -->
+      <div class="controls-panel">
+        <mat-form-field appearance="outline" class="flex-1">
+          <mat-label>{{ t('admin.select_config') }}</mat-label>
+          <mat-select (selectionChange)="onConfigChange($event.value)" [value]="configForm.getRawValue().key">
+            @for (config of configs; track config.key) {
+            <mat-option [value]="config.key">{{ config.key }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <div class="flex gap-2">
+          <button mat-icon-button color="primary" (click)="prepareCreate()" [matTooltip]="t('common.add')">
+            <mat-icon>add</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="onDelete()" [disabled]="isNew || !configForm.getRawValue().key"
+            [matTooltip]="t('common.delete')">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <!-- Pannello Dettagli (Key, Description, isEnvValue) -->
+      <form [formGroup]="configForm" class="details-panel">
+
+        @if (isNew) {
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>{{ t('admin.new_key_name') }}</mat-label>
+          <input matInput formControlName="key">
+          @if (configForm.get('key')?.invalid && configForm.get('key')?.touched) {
+          <mat-error>{{ t('validation.required') }}</mat-error>
+          }
+        </mat-form-field>
+        } @else {
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Key</mat-label>
+          <input matInput formControlName="key">
+        </mat-form-field>
+        }
+
+        <mat-checkbox formControlName="isEnvValue" class="mt-2">
+          {{ t('admin.is_env_value') }}
+        </mat-checkbox>
+
+        <mat-form-field appearance="outline" class="w-full description-field">
+          <mat-label>{{ t('common.description') }}</mat-label>
+          <textarea matInput formControlName="description" cdkTextareaAutosize #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="5" cdkAutosizeMaxRows="10"></textarea>
+        </mat-form-field>
+
+        <div class="button-group">
+          <button mat-raised-button color="primary" (click)="onSave()"
+            [disabled]="configForm.invalid || !configForm.dirty">
+            <mat-icon>save</mat-icon>
+            {{ t('common.save') }}
+          </button>
+          <button mat-stroked-button type="button" (click)="onCancel()" [disabled]="!isNew && !configForm.dirty">
+            <mat-icon>undo</mat-icon>
+            {{ t('common.cancel') }}
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Colonna Destra (JSON Editor) -->
+    <div class="right-panel">
+      <div class="json-editor-area">
+        <div class="json-editor-header">
+          {{ t('admin.configuration_data_json') }}
+          <button mat-icon-button color="primary" (click)="reloadConfigs()" [matTooltip]="t('admin.reload_configs')">
+            <mat-icon>refresh</mat-icon>
+          </button>
+        </div>
+        <div class="json-editor-wrapper">
+          <tc-json-editor 
+            #jsonEditor 
+            [options]="editorOptions">
+          </tc-json-editor>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

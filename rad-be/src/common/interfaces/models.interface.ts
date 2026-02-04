@@ -30,3 +30,8 @@ export interface IUser extends IBase {
     disabled?: boolean;
 }
 
+export interface IDepartment extends IBase {
+    id: number;
+    code: string;
+    description: string;
+}

@@ -12,6 +12,12 @@ export interface IAuth {
   password?: string;
 }
 
+export interface IDepartment extends IBase {
+  id: number;
+  code: string;
+  description: string;
+}
+
 export interface IUser extends IBase {
   username: string;
   email: string;

@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 //import { ScheduleModule } from '@nestjs/schedule';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
@@ -12,6 +13,8 @@ import { TransformInterceptor } from './common/interceptors/transform.intercepto
 import { getDatabaseConfig } from './config/database.config';
 import { AdminModule } from './modules/admin/admin.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { RadConfigModule } from './modules/config/config.module';
+import { DepartmentsModule } from './modules/departments/departments.module';
 import { UsersModule } from './modules/users/users.module';
 
 @Module({
@@ -22,7 +25,7 @@ import { UsersModule } from './modules/users/users.module';
         // Configuration
         ConfigModule.forRoot({ isGlobal: true }),
         // Events emitter
-        // EventEmitterModule.forRoot(),
+        EventEmitterModule.forRoot(),
         // Rate limiting
         ThrottlerModule.forRootAsync({
             imports: [ConfigModule],
@@ -41,8 +44,10 @@ import { UsersModule } from './modules/users/users.module';
             useFactory: (config: ConfigService) => getDatabaseConfig(config),
         }),
         // Feature modules
+        RadConfigModule,
         AdminModule,
         AuthModule,
+        DepartmentsModule,
         UsersModule
     ],
     providers: [

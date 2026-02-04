@@ -1,6 +1,5 @@
 # ============================================
 # DEBIAN / SERVER STACK (VERSIONE CORRETTA E COMPLETA)
-# Ref: Correzioni su porte, nomi container e configurazioni mancanti.
 # ============================================
 name: rad_system
 
@@ -72,17 +71,17 @@ services:
   # ============================================
   # CACHING - Redis
   # ============================================
-  redis:
-    image: redis:7-alpine
-    container_name: rad_redis
-    ports:
-      - "6379:6379"
-    command: redis-server --appendonly yes --requirepass redis123
-    volumes:
-      - ./Volumes/redis:/data # Bind Mount
-    networks:
-      - rad_network
-    restart: unless-stopped
+  # redis:
+  #   image: redis:7-alpine
+  #   container_name: rad_redis
+  #   ports:
+  #     - "6379:6379"
+  #   command: redis-server --appendonly yes --requirepass redis123
+  #   volumes:
+  #     - ./Volumes/redis:/data # Bind Mount
+  #   networks:
+  #     - rad_network
+  #   restart: unless-stopped
 
 networks:
   rad_network:
