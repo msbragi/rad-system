@@ -1,10 +1,10 @@
 {
   "en": {
-    "passwordReset": "RAG System Password Reset",
+    "passwordReset": "System Password Reset",
     "passwordChanged": "Your Password Has Been Changed"
   },
   "it": {
-    "passwordReset": "RAG System Reset della Password",
+    "passwordReset": "System Reset della Password",
     "passwordChanged": "La tua password è stata cambiata"
   }
 }
