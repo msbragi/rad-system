@@ -1,8 +1,8 @@
 # =================================================================
 # DOCKER & DEVOPS
 # =================================================================
-# Ignore docs for now
-docs
+# Ignore html docs
+docs/html
 
 # Ignora tutti i dati persistenti nei volumi locali.
 # La struttura delle cartelle è preservata tramite i file .keep
